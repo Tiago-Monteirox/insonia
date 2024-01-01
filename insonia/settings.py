@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lojapp',
     'category',
+    'pdv',
 ]
 
 MIDDLEWARE = [
