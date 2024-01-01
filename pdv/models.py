@@ -46,4 +46,16 @@ class ItemVenda(models.Model):
 
         # Calcula o valor de venda antes de salvar
         self.valor_venda = self.calcular_valor_total_venda()
+
+        # Atualiza a quantidade disponível do produto
+        self.atualizar_quantidade_produto()
+
         super().save(*args, **kwargs)
+
+    def atualizar_quantidade_produto(self):
+        # Reduz a quantidade disponível do produto
+        nova_quantidade = self.produto.quantidade - self.quantidade
+        if nova_quantidade < 0:
+            raise ValueError("Quantidade insuficiente do produto disponível.")
+        self.produto.quantidade = nova_quantidade
+        self.produto.save()
