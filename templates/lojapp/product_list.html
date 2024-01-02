@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Lista de Produtos</h2>
+<ul>
+    {% for produto in produtos %}
+    <li>{{ produto.name }} - {{ produto.preco_custo }}</li>
+    {% empty %}
+    <li>Nenhum produto encontrado.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

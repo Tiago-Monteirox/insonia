@@ -1,3 +1,9 @@
-from django.shortcuts import render
+# lojapp/views.py
 
-# Create your views here.
+from django.shortcuts import render
+from .models import Produto
+
+
+def product_list(request):
+    produtos = Produto.objects.all()
+    return render(request, 'lojapp/product_list.html', {'produtos': produtos})
