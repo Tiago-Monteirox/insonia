@@ -35,12 +35,11 @@ def importar_dados_excel(caminho_arquivo):
             preco_venda=None,
             preco_venda_promocional=None,
             descricao_curta='',
-            imagem=None,
             slug=None,
         )
 
 if __name__ == "__main__":
-    caminho_arquivo_excel = '/home/tiago/Documents/tabela_exportacao_produtos_projeto.xlsx'
+    caminho_arquivo_excel = '/home/tiago/Documents/tabela_exportacao_produtos_projeto_1.xlsx'
     importar_dados_excel(caminho_arquivo_excel)
 
 print("Importação de dados concluída com sucesso!")
