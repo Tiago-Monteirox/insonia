@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from lojapp.models import Produto, Categoria, ProdutoImagem
+from lojapp.models import Marca
 
 class ProdutoImagemInline(admin.TabularInline):
     model = ProdutoImagem
@@ -23,6 +24,12 @@ class ProdutoAdmin(admin.ModelAdmin):
     
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    list_editable = ('slug',)
+    search_fields = ('name',)
+
+@admin.register(Marca)
+class MarcaAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     list_editable = ('slug',)
     search_fields = ('name',)
