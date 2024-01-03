@@ -41,12 +41,13 @@ class Produto(models.Model):
     preco_venda = models.FloatField(verbose_name='Preço', blank=True, null=True)
     preco_venda_promocional = models.FloatField(verbose_name='Preço promocional', blank=True, null=True)
     descricao_curta = models.TextField(max_length=100, blank=True, null=True)
-    imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True, null=True)
+    # imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     preco_custo = models.FloatField(verbose_name='Preço de custo', blank=False, null=False)
 
     def __str__(self):
         return self.name
+
 
     def clean(self):
         # Validação dos preços para assegurar que não são negativos
@@ -66,6 +67,12 @@ class Produto(models.Model):
         self.full_clean()  # Chama o método clean para validação
         super(Produto, self).save(*args, **kwargs)
 
+class ProdutoImagem(models.Model):
+    produto = models.ForeignKey(Produto, related_name='imagens', on_delete=models.CASCADE)
+    imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/')
+
+    def __str__(self):
+        return f"Imagem de {self.produto.name}"
 
 
 
