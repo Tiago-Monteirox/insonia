@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lojapp',
-    'category',
     'pdv',
-]
+    
+] 
+
 JAZZMIN_SETTINGS = {
     
     "show_ui_builder": True,
