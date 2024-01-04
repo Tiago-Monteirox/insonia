@@ -99,7 +99,7 @@ class ProdutoImagem(models.Model):
         return f"Imagem de {self.produto.name}"
 
 class NomeVariacao(models.Model):
-    name = models.CharField(max_length=50)  # Exemplo: Tamanho, Cor
+    name = models.CharField(max_length=50, unique=True)  # Exemplo: Tamanho, Cor
 
     def __str__(self):
         return self.name
@@ -118,6 +118,7 @@ class ValorVariacao(models.Model):
     class Meta:
         verbose_name = 'Valor da Variação'
         verbose_name_plural = 'Valores das Variações'
+        unique_together = ('nome_variacao', 'valor')
 
 class Variacao(models.Model):
     produto = models.ForeignKey(Produto, related_name='variacoes', on_delete=models.CASCADE)
