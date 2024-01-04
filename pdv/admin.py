@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import Venda, ItemVenda
+from django.utils.html import format_html
+from datetime import datetime
 
 class ItemVendaInline(admin.TabularInline):
     model = ItemVenda
@@ -8,7 +10,8 @@ class ItemVendaInline(admin.TabularInline):
 
 class VendaAdmin(admin.ModelAdmin):
     inlines = [ItemVendaInline]
-    list_display = ('id', 'usuario', 'get_produtos', 'total_venda', 'data_venda')
+    list_display = ('id', 'usuario', 'get_produtos', 'total_venda', 'lucro_total', 'data_venda')
+    actions = ['mostrar_valor_total_vendas', 'mostrar_lucro_total_vendas']
     
     def get_produtos(self, obj):
         return ", ".join([item.produto.name for item in obj.itens_venda.all()])
@@ -23,6 +26,16 @@ class VendaAdmin(admin.ModelAdmin):
     def lucro_total(self, obj):
         return obj.lucro_total
     lucro_total.short_description = 'Lucro Total'
+
+    def mostrar_valor_total_vendas(self, request, queryset):
+        total = Venda.calcular_valor_total_vendas()
+        self.message_user(request, f"Valor total das vendas: {total}")
+    mostrar_valor_total_vendas.short_description = "Mostrar valor total das vendas"
+
+    def mostrar_lucro_total_vendas(self, request, queryset):
+        lucro = Venda.calcular_lucro_total_vendas()
+        self.message_user(request, f"Lucro total das vendas: {lucro}")
+    mostrar_lucro_total_vendas.short_description = "Mostrar lucro total das vendas"
 
    
 admin.site.register(Venda, VendaAdmin)

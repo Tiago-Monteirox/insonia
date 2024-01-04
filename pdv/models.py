@@ -32,7 +32,12 @@ class Venda(models.Model):
     
     @property
     def lucro_total(self):
-        return Decimal(str(self.total_venda)) - Decimal(str(self.preco_custo_total()))
+        total_venda = self.total_venda.amount if isinstance(self.total_venda, Money) else self.total_venda
+        preco_custo_total = self.preco_custo_total()
+        preco_custo_total = preco_custo_total.amount if isinstance(preco_custo_total, Money) else preco_custo_total
+        return total_venda - preco_custo_total
+
+
 
     def preco_custo_total(self):
         return sum(item.calcular_valor_total_custo() for item in self.itens_venda.all())
