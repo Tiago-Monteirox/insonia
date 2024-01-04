@@ -8,6 +8,15 @@ class Venda(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     data_venda = models.DateTimeField(auto_now_add=True)
 
+    @classmethod 
+    def calcular_valor_total_vendas(cls):
+        return sum(venda.total_venda for venda in cls.objects.all)
+    
+    @classmethod
+    def calcular_valor_total_por_periodo(cls, data_inicio, data_fim):
+        vendas_no_periodo = cls.objects.filter(data_venda__range=[data_inicio, data_fim])
+        return sum(venda.total_venda for venda in vendas_no_periodo)
+
     @property
     def total_venda(self):
         return sum(item.calcular_valor_total_venda() for item in self.itens_venda.all())
