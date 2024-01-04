@@ -8,9 +8,8 @@ class ItemVendaInline(admin.TabularInline):
 
 class VendaAdmin(admin.ModelAdmin):
     inlines = [ItemVendaInline]
-    list_display = ('id', 'usuario', 'get_produtos', 'total_venda', 'lucro_total', 'data_venda')
-    readonly_fields = ('total_venda', 'lucro_total')
-
+    list_display = ('id', 'usuario', 'get_produtos', 'total_venda', 'data_venda')
+    
     def get_produtos(self, obj):
         return ", ".join([item.produto.name for item in obj.itens_venda.all()])
     get_produtos.short_description = 'Produtos'

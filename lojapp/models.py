@@ -4,6 +4,7 @@ from django.utils.text import slugify
 import os
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from djmoney.models.fields import MoneyField
 
 class Categoria(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -63,12 +64,12 @@ class Produto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete = models.CASCADE, null=True)
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE, null=True, blank=True)
     quantidade = models.PositiveIntegerField(blank=True, null=True)
-    preco_venda = models.FloatField(verbose_name='Preço', blank=True, null=True)
-    preco_venda_promocional = models.FloatField(verbose_name='Preço promocional', blank=True, null=True)
+    preco_venda = MoneyField(max_digits=14, decimal_places=2, default_currency='BRL', verbose_name='Preço', blank=True, null=True)
+    preco_venda_promocional = MoneyField(max_digits=14, decimal_places=2, default_currency='BRL', verbose_name='Preço promocional', blank=True, null=True)
     descricao_curta = models.TextField(max_length=100, blank=True, null=True)
     # imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    preco_custo = models.FloatField(verbose_name='Preço de custo', blank=False, null=False)
+    preco_custo = MoneyField(max_digits=14, decimal_places=2, default_currency='BRL', verbose_name='Preço de custo', blank=False, null=False)
     tem_variacao = models.BooleanField(default=False)
 
     def __str__(self):
@@ -81,7 +82,7 @@ class Produto(models.Model):
             raise ValidationError('O preço de venda não pode ser negativo.')
         if self.preco_venda_promocional is not None and self.preco_venda_promocional < 0:
             raise ValidationError('O preço promocional não pode ser negativo.')
-        if self.preco_custo is not None and self.preco_custo < 0:
+        if self.preco_custo is not None and self.preco_custo.amount < 0:
             raise ValidationError('O preço de custo não pode ser negativo.')
 
         # Validação para assegurar que o preço promocional não é maior que o preço normalDeslizando no colo do pai - mc menor da vg - triz

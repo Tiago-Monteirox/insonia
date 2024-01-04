@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from decimal import Decimal
+from djmoney.models.fields import MoneyField
+from djmoney.money import Money
 
 class Venda(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -31,11 +33,15 @@ class ItemVenda(models.Model):
     venda = models.ForeignKey(Venda, on_delete=models.CASCADE, related_name='itens_venda')
     produto = models.ForeignKey('lojapp.Produto', on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
-    valor_venda = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    valor_venda = MoneyField(max_digits=10, decimal_places=2, default=0)
 
     def calcular_valor_total_venda(self):
-        return self.valor_venda * self.quantidade
-
+        if isinstance(self.valor_venda, Money):
+            total = self.valor_venda * self.quantidade
+            return Money(amount=total.amount, currency=self.valor_venda.currency)
+        else:
+            raise ValueError("valor_venda deve ser uma instância de Money")
+        
     def calcular_valor_total_custo(self):
         return self.produto.preco_custo * self.quantidade
 
