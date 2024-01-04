@@ -24,6 +24,7 @@ class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('name', 'quantidade', 'preco_custo', 'mostrar_primeira_imagem')  # Adicione 'quantidade' à lista de exibição
     list_editable = ('quantidade',)
     inlines = [ProdutoImagemInline, VariacaoInline]
+    list_filter = ('categoria', 'marca')
 
     def mostrar_primeira_imagem(self, obj):
         primeira_imagem = obj.imagens.first()

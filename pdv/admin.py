@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from .forms import DateRangeForm
 from django.shortcuts import render
 from lojapp.models import *
-
+from lojapp.admin import ProdutoAdmin
 
 
 class MyAdminSite(admin.AdminSite):
@@ -94,7 +94,7 @@ class VendaAdmin(admin.ModelAdmin):
         return render(request, 'admin/estatisticas.html', context)
 
 
-admin_site.register(Produto)
+admin_site.register(Produto, ProdutoAdmin)
 
 admin_site.register(ValorVariacao)
 
