@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from lojapp.models import Produto, Categoria, ProdutoImagem
-from lojapp.models import Marca,Variacao, NomeVariacao
+from lojapp.models import Marca,Variacao, NomeVariacao, ValorVariacao
 
 class ProdutoImagemInline(admin.TabularInline):
     model = ProdutoImagem
@@ -13,6 +13,14 @@ class VariacaoInline(admin.TabularInline):
     extra = 1
     min_num = 1
     max_num = 10
+
+class ValorVariacaoInline(admin.TabularInline):
+    model = ValorVariacao
+    extra = 1
+    max_num = 10
+
+class NomeVariacaoAdmin(admin.ModelAdmin):
+    inlines = [ValorVariacaoInline]
 
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
@@ -40,9 +48,13 @@ class MarcaAdmin(admin.ModelAdmin):
     list_editable = ('slug',)
     search_fields = ('name',)
 
-@admin.register(NomeVariacao)
+
 class NomeVariacaoAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+    inlines = [ValorVariacaoInline]
 
 admin.site.register(ProdutoImagem)
+admin.site.register(ValorVariacao)
+
+admin.site.register(NomeVariacao, NomeVariacaoAdmin)

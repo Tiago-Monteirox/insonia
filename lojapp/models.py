@@ -84,10 +84,7 @@ class Produto(models.Model):
         if self.preco_custo is not None and self.preco_custo < 0:
             raise ValidationError('O preço de custo não pode ser negativo.')
 
-        # Validação para assegurar que o preço promocional não é maior que o preço normal
-        if self.preco_venda_promocional is not None and self.preco_venda is not None:
-            if self.preco_venda_promocional > self.preco_venda:
-                raise ValidationError('O preço promocional não pode ser maior que o preço de venda.')
+        # Validação para assegurar que o preço promocional não é maior que o preço normalDeslizando no colo do pai - mc menor da vg - triz
 
     def save(self, *args, **kwargs):
         self.full_clean()  # Chama o método clean para validação
@@ -110,19 +107,28 @@ class NomeVariacao(models.Model):
         verbose_name = 'Nome da Variação'
         verbose_name_plural = 'Nomes das Variações'
 
+class ValorVariacao(models.Model):
+    nome_variacao = models.ForeignKey(NomeVariacao, related_name='valores', on_delete=models.CASCADE, null=True)
+    valor = models.CharField(max_length=50, )  # Exemplo: 'M', 'Vermelho'
+
+    def __str__(self):
+        return f'{self.nome_variacao_nome}: {self.valor}'
+
+    class Meta:
+        verbose_name = 'Valor da Variação'
+        verbose_name_plural = 'Valores das Variações'
+
 class Variacao(models.Model):
     produto = models.ForeignKey(Produto, related_name='variacoes', on_delete=models.CASCADE)
-    nome_variacao = models.ForeignKey(NomeVariacao, on_delete=models.CASCADE, null=True, blank=True)
-    valor = models.CharField(max_length=50)  # Exemplo: M, Vermelho
+    valor = models.ForeignKey(ValorVariacao, on_delete=models.CASCADE)  # Exemplo: M, Vermelho
     quantidade = models.PositiveIntegerField(default=0)
 
 
     def __str__(self):
-        nome_variacao_str = self.nome_variacao.name if self.nome_variacao else "unknown"
-        return f"{nome_variacao_str} - {self.valor} (Quantidade: {self.quantidade})"
+        return f"{self.valor.nome_variacao.name} - {self.valor.valor} (Quantidade: {self.quantidade})"
 
     class Meta:
-        unique_together = ('produto', 'nome_variacao', 'valor')  # Garante que cada variação seja única por produto
+        unique_together = ('produto', 'valor')  # Garante que cada variação seja única por produto
         verbose_name = 'Variação'
         verbose_name_plural = 'Variações'
 
@@ -136,10 +142,6 @@ class Variacao(models.Model):
         self.full_clean()  # Validação antes de salvar
         super(Variacao, self).save(*args, **kwargs)
 
-    class Meta:
-        unique_together = ('produto', 'nome_variacao', 'valor')
-        verbose_name = 'Variação'
-        verbose_name_plural = 'Variações'
 
 
 
