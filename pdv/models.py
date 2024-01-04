@@ -10,12 +10,21 @@ class Venda(models.Model):
 
     @classmethod 
     def calcular_valor_total_vendas(cls):
-        return sum(venda.total_venda for venda in cls.objects.all)
+        return sum(venda.total_venda for venda in cls.objects.all())
     
     @classmethod
     def calcular_valor_total_por_periodo(cls, data_inicio, data_fim):
         vendas_no_periodo = cls.objects.filter(data_venda__range=[data_inicio, data_fim])
         return sum(venda.total_venda for venda in vendas_no_periodo)
+    
+    @classmethod
+    def calcular_lucro_total_vendas(cls):
+        return sum(venda.lucro_total for venda in cls.objects.all())
+    
+    @classmethod
+    def calcular_lucro_total_por_periodo(cls, data_inicio, data_fim):
+        vendas_no_periodo = cls.objects.filter(data_venda__range=[data_inicio, data_fim])
+        return sum(venda.lucro_total for venda in vendas_no_periodo)
 
     @property
     def total_venda(self):
@@ -56,7 +65,7 @@ class ItemVenda(models.Model):
 
     def save(self, *args, **kwargs):
         # Certifique-se de que o valor_venda é não nulo e não negativo
-        if self.valor_venda is None or self.valor_venda < 0:
+        if self.valor_venda is None or self.valor_venda < Money(0, self.valor_venda.currency):
             raise ValueError("O valor de venda deve ser especificado e não pode ser negativo.")
 
         # Calcula o valor de venda antes de salvar
