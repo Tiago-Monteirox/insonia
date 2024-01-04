@@ -1,0 +1,15 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+    <h1>Estatísticas de Vendas</h1>
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Calcular</button>
+    </form>
+    {% if valor_total %}
+        <h2>Valor Total: {{ valor_total }}</h2>
+    {% endif %}
+    {% if lucro_total %}
+        <h2>Lucro Total: {{ lucro_total }}</h2>
+    {% endif %}
+{% endblock %}

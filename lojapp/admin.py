@@ -19,10 +19,7 @@ class ValorVariacaoInline(admin.TabularInline):
     extra = 1
     max_num = 10
 
-class NomeVariacaoAdmin(admin.ModelAdmin):
-    inlines = [ValorVariacaoInline]
 
-@admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('name', 'quantidade', 'preco_custo', 'mostrar_primeira_imagem')  # Adicione 'quantidade' à lista de exibição
     list_editable = ('quantidade',)
@@ -36,13 +33,13 @@ class ProdutoAdmin(admin.ModelAdmin):
     mostrar_primeira_imagem.short_description = 'Imagem'
 
     
-@admin.register(Categoria)
+
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     list_editable = ('slug',)
     search_fields = ('name',)
 
-@admin.register(Marca)
+
 class MarcaAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     list_editable = ('slug',)
@@ -54,7 +51,9 @@ class NomeVariacaoAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     inlines = [ValorVariacaoInline]
 
-admin.site.register(ProdutoImagem)
-admin.site.register(ValorVariacao)
 
-admin.site.register(NomeVariacao, NomeVariacaoAdmin)
+
+# admin.site.register(ProdutoImagem)
+# admin.site.register(ValorVariacao)
+
+# admin.site.register(NomeVariacao, NomeVariacaoAdmin)

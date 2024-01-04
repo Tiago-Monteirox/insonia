@@ -12,8 +12,8 @@ class Categoria(models.Model):
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'categoria'
-        verbose_name_plural = 'categorias'
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
 
     def __str__(self):
         return self.name
@@ -38,8 +38,8 @@ class Marca(models.Model):
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'marca'
-        verbose_name_plural = 'marcas'
+        verbose_name = 'Marca'
+        verbose_name_plural = 'Marcas'
 
     def __str__(self):
         return self.name
@@ -113,7 +113,7 @@ class ValorVariacao(models.Model):
     valor = models.CharField(max_length=50, )  # Exemplo: 'M', 'Vermelho'
 
     def __str__(self):
-        return f'{self.nome_variacao_nome}: {self.valor}'
+        return f'{self.nome_variacao.name}: {self.valor}'
 
     class Meta:
         verbose_name = 'Valor da Variação'
