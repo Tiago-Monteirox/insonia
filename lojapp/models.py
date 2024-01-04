@@ -70,8 +70,7 @@ class Produto(models.Model):
     # imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     preco_custo = MoneyField(max_digits=14, decimal_places=2, default_currency='BRL', verbose_name='Preço de custo', blank=False, null=False)
-    tem_variacao = models.BooleanField(default=False)
-
+    
     def __str__(self):
         return self.name
 
@@ -136,7 +135,7 @@ class Variacao(models.Model):
 
             # Valida se a soma das quantidades das variações não excede a quantidade total do produto
     def clean(self):
-        total_variacoes = sum([var.quantidade for var in Variacao.objects.filter(produto=self.produto) if var != self])
+        total_variacoes = sum([var.quantidade for var in self.variacoes.all() if var != self])
         if total_variacoes + self.quantidade > self.produto.quantidade:
             raise ValidationError('A soma das quantidades das variações não pode exceder a quantidade total do produto.')
 

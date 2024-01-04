@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from lojapp.models import Produto, Categoria, ProdutoImagem
 from lojapp.models import Marca,Variacao, NomeVariacao, ValorVariacao
+from django.contrib.admin import SimpleListFilter
 
 class ProdutoImagemInline(admin.TabularInline):
     model = ProdutoImagem
@@ -18,6 +19,18 @@ class ValorVariacaoInline(admin.TabularInline):
     model = ValorVariacao
     extra = 1
     max_num = 10
+
+class VariacaoFilter(SimpleListFilter):
+    title = 'variação'
+    parameter_name = 'variacao'
+
+    def lookups(self, request, model_admin):
+        variacoes = set([variacao for produto in Produto.objects.all() for variacao in produto.variacoes_set.all()])
+        return [(variacao.id, variacao.nome) for variacao in variacoes]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(variacao__id=self.value())
 
 
 class ProdutoAdmin(admin.ModelAdmin):
