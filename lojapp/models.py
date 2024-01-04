@@ -122,22 +122,16 @@ class ValorVariacao(models.Model):
 class Variacao(models.Model):
     produto = models.ForeignKey(Produto, related_name='variacoes', on_delete=models.CASCADE)
     valor = models.ForeignKey(ValorVariacao, on_delete=models.CASCADE)  # Exemplo: M, Vermelho
-    quantidade = models.PositiveIntegerField(default=0)
 
 
     def __str__(self):
-        return f"{self.valor.nome_variacao.name} - {self.valor.valor} (Quantidade: {self.quantidade})"
+        return f"{self.valor.nome_variacao.name}"
 
     class Meta:
         unique_together = ('produto', 'valor')  # Garante que cada variação seja única por produto
         verbose_name = 'Variação'
         verbose_name_plural = 'Variações'
 
-            # Valida se a soma das quantidades das variações não excede a quantidade total do produto
-    def clean(self):
-        total_variacoes = sum([var.quantidade for var in self.variacoes.all() if var != self])
-        if total_variacoes + self.quantidade > self.produto.quantidade:
-            raise ValidationError('A soma das quantidades das variações não pode exceder a quantidade total do produto.')
 
     def save(self, *args, **kwargs):
         self.full_clean()  # Validação antes de salvar
