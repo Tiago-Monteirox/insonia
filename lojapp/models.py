@@ -77,9 +77,9 @@ class Produto(models.Model):
 
     def clean(self):
         # Validação dos preços para assegurar que não são negativos
-        if self.preco_venda is not None and self.preco_venda < 0:
+        if self.preco_venda is not None and self.preco_venda.amount < 0:
             raise ValidationError('O preço de venda não pode ser negativo.')
-        if self.preco_venda_promocional is not None and self.preco_venda_promocional < 0:
+        if self.preco_venda_promocional is not None and self.preco_venda_promocional.amount < 0:
             raise ValidationError('O preço promocional não pode ser negativo.')
         if self.preco_custo is not None and self.preco_custo.amount < 0:
             raise ValidationError('O preço de custo não pode ser negativo.')
