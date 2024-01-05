@@ -60,7 +60,7 @@ class Marca(models.Model):
 
 
 class Produto(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     categoria = models.ForeignKey(Categoria, on_delete = models.CASCADE, null=True)
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE, null=True, blank=True)
     quantidade = models.PositiveIntegerField(blank=True, null=True)
