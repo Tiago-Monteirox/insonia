@@ -96,13 +96,19 @@ GRANT ALL PRIVILEGES ON DATABASE insonia_db TO meu_usuario;
 No bloco DATABASES, substitua pelo PostgreSQL:
 <p>&nbsp;</p>
 
-DATABASES = {
+DATABASES =
+{
     'default': { 
         'ENGINE': 'django.db.backends.postgresql', 
-        'NAME': 'insonia_db',   
+        
+        'NAME': 'insonia_db',
+        
         'USER': 'meu_usuario',
+        
         'PASSWORD': 'minha_senha',
+        
         'HOST': 'localhost',
+        
         'PORT': '5432',
     }
 }
