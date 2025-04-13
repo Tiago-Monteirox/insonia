@@ -91,16 +91,12 @@ GRANT ALL PRIVILEGES ON DATABASE insonia_db TO meu_usuario;
 
 
 ✏️ Editar o settings.py
-<p>&nbsp;</p>
-
 
 
 No bloco DATABASES, substitua pelo PostgreSQL:
 <p>&nbsp;</p>
 
-
 DATABASES = {
-
     'default': {
     
     
@@ -115,12 +111,10 @@ DATABASES = {
         'HOST': 'localhost',
         
         'PORT': '5432',
-        
     }
 }
 
 <p>&nbsp;</p>
-
 
 Execute as migrações:
 <p>&nbsp;</p>
