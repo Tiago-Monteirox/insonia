@@ -15,7 +15,7 @@ Insônia é um sistema de gerenciamento de vendas desenvolvido com Django. Permi
 
 ## 🖼️ Imagens do Sistema
 
-<img src="https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b" width="600"/>
+<img src="https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b" width="800"/>
 
 ---
 
