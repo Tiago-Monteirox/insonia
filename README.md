@@ -54,7 +54,7 @@ cd insonia
 
 
 
-Crie e ative um ambiente virtual:
+➡️Crie e ative um ambiente virtual:
 <p>&nbsp;</p>
 
 python -m venv venv
@@ -63,14 +63,14 @@ source venv/bin/activate  # ou venv\Scripts\activate no Windows
 <p>&nbsp;</p>
 
 
-Instale as dependências:
+⚙️Instale as dependências:
 <p>&nbsp;</p>
 
 pip install -r requirements.txt
 <p>&nbsp;</p>
 
 
-🛠️ Criar o banco no PostgreSQL
+🛠️Criar o banco no PostgreSQL
 <p>&nbsp;</p>
 
 
@@ -90,7 +90,7 @@ GRANT ALL PRIVILEGES ON DATABASE insonia_db TO meu_usuario;
 <p>&nbsp;</p>
 
 
-✏️ Editar o settings.py
+✏️Editar o settings.py
 
 
 No bloco DATABASES, substitua pelo PostgreSQL:
@@ -117,7 +117,7 @@ DATABASES =
 
 <p>&nbsp;</p>
 
-Execute as migrações:
+🔀Execute as migrações:
 <p>&nbsp;</p>
 
 
@@ -125,7 +125,7 @@ python manage.py migrate
 <p>&nbsp;</p>
 
 
- 🔐 Criar o superusuário:
+ 🔐Criar o superusuário:
 <p>&nbsp;</p>
 
  
@@ -133,7 +133,7 @@ python manage.py createsuperuser
 <p>&nbsp;</p>
 
 
-Inicie o servidor: 
+▶️Inicie o servidor: 
 <p>&nbsp;</p>
 
 
@@ -141,12 +141,12 @@ python manage.py runserver
 <p>&nbsp;</p>
 
 
-Acesse http://127.0.0.1:8000/admin/
+✨Acesse http://127.0.0.1:8000/admin/
 <p>&nbsp;</p>
 
 
 
-📥 Importação de Dados via Planilha Excel
+📥Importação de Dados via Planilha Excel
 <p>&nbsp;</p>
 
 
@@ -158,7 +158,7 @@ Esse recurso é útil, por exemplo, para cadastrar rapidamente uma grande quanti
 
 Esse script faz a leitura da planilha, processa os dados e registra os produtos diretamente no banco utilizando os modelos do Django.
 
-🧠 Esse recurso é ideal para quem já tem o estoque organizado em Excel e deseja migrar para o sistema sem precisar cadastrar item por item manualmente.
+🧠Esse recurso é ideal para quem já tem o estoque organizado em Excel e deseja migrar para o sistema sem precisar cadastrar item por item manualmente.
 
 
 
