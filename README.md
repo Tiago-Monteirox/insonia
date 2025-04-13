@@ -26,9 +26,12 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 📋 Dashboard simples e intuitivo
 
 🔐 Sistema de autenticação de usuários
+<p>&nbsp;</p>
 
 
 💻 Tecnologias utilizadas:
+<p>&nbsp;</p>
+
 
 Python 🐍
 
@@ -37,26 +40,41 @@ Django==5.0 🕸️
 Postgresql
 
 bootstrap com HTML e CSS
+<p>&nbsp;</p>
 
 🚧 Como rodar o projeto localmente:
+<p>&nbsp;</p>
+
+
 
 git clone https://github.com/Tiago-Monteirox/insonia.git
 
 cd insonia
+<p>&nbsp;</p>
+
+
 
 Crie e ative um ambiente virtual:
 
 python -m venv venv
 
 source venv/bin/activate  # ou venv\Scripts\activate no Windows
+<p>&nbsp;</p>
+
 
 Instale as dependências:
 
 pip install -r requirements.txt
+<p>&nbsp;</p>
+
 
 🛠️ Criar o banco no PostgreSQL
+<p>&nbsp;</p>
+
 
 Abra o terminal do PostgreSQL ou o psql e crie o banco e o usuário (se necessário):
+<p>&nbsp;</p>
+
 
 CREATE DATABASE insonia_db;
 
@@ -67,11 +85,17 @@ ALTER ROLE meu_usuario SET client_encoding TO 'utf8';
 ALTER ROLE meu_usuario SET timezone TO 'UTC';
 
 GRANT ALL PRIVILEGES ON DATABASE insonia_db TO meu_usuario;
+<p>&nbsp;</p>
+
 
 ✏️ Editar o settings.py
+<p>&nbsp;</p>
+
 
 
 No bloco DATABASES, substitua pelo PostgreSQL:
+<p>&nbsp;</p>
+
 
 DATABASES = {
     'default': {
@@ -84,20 +108,36 @@ DATABASES = {
     }
 }
 
+<p>&nbsp;</p>
+
 
 Execute as migrações:
+<p>&nbsp;</p>
+
 
 python manage.py migrate
+<p>&nbsp;</p>
+
 
  🔐 Criar o superusuário:
+<p>&nbsp;</p>
+
  
 python manage.py createsuperuser
+<p>&nbsp;</p>
+
 
 Inicie o servidor: 
+<p>&nbsp;</p>
+
 
 python manage.py runserver
+<p>&nbsp;</p>
+
 
 Acesse http://127.0.0.1:8000/admin/
+<p>&nbsp;</p>
+
 
 
 📥 Importação de Dados via Planilha Excel
