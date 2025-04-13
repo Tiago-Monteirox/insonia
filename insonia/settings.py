@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'insonia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'insonia',
         'HOST': '127.0.0.1',
         'USER': 'tiago',
