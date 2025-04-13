@@ -1,56 +1,52 @@
-💤 Insônia – Sistema de Vendas de Produtos
+# 💤 Insônia – Sistema de Vendas de Produtos
+
+![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.1.4-green?logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 Insônia é um sistema de gerenciamento de vendas desenvolvido com Django. Permite:
 
-Cadastro e controle de produtos, Controle de vendas, Análise de lucro por período ,e muito mais (tipo sua ansiedade às 2 da manhã)
+> **Cadastro e controle de produtos**, **controle de vendas**, **análise de lucro por período** — e muito mais (tipo sua ansiedade às 2 da manhã).
 
-🚀 Projeto desenvolvido por Tiago Monteiro – estudante de Análise e Desenvolvimento de Sistemas e apaixonado por Python e Django(Quase romântico).
+🚀 Projeto desenvolvido por **Tiago Monteiro** – estudante de Análise e Desenvolvimento de Sistemas e apaixonado por Python e Django (*quase romântico*).
 
-![image](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)
-![image](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)
-<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)" width="200"/>
-<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)" width="50"/> 
+---
 
+## 🖼️ Imagens do Sistema
 
-⚙️ Funcionalidades:
+<img src="https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b" width="600"/>
+<img src="https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf" width="600"/>
 
-🧾 Cadastro, edição e exclusão de produtos
+---
 
-💰 Registro de vendas e controle de estoque
+## ⚙️ Funcionalidades
 
-📊 Filtro de lucro por período
+- 🧾 Cadastro, edição e exclusão de produtos  
+- 💰 Registro de vendas e controle de estoque  
+- 📊 Filtro de lucro por período  
+- 🔍 Busca e filtros inteligentes  
+- 📈 Análise de desempenho das vendas  
+- 📋 Dashboard simples e intuitivo  
+- 🔐 Sistema de autenticação de usuários  
 
-🔍 Busca e filtros inteligentes
+---
 
-📈 Análise de desempenho das vendas
+## 💻 Tecnologias Utilizadas
 
-📋 Dashboard simples e intuitivo
+- Python 🐍  
+- Django 5.1.4 🕸️  
+- PostgreSQL 🐘  
+- Bootstrap com HTML e CSS 🎨  
 
-🔐 Sistema de autenticação de usuários
-<p>&nbsp;</p>
+---
 
+## 🚧 Como rodar o projeto localmente
 
-💻 Tecnologias utilizadas:
-<p>&nbsp;</p>
-
-
-Python 🐍
-
-Django==5.1.4 🕸️
-
-Postgresql
-
-bootstrap com HTML e CSS
-<p>&nbsp;</p>
-
-🚧 Como rodar o projeto localmente:
-<p>&nbsp;</p>
-
-
-
+```bash
 git clone https://github.com/Tiago-Monteirox/insonia.git
-
 cd insonia
+
 <p>&nbsp;</p>
 
 
