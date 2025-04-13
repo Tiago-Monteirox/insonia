@@ -6,11 +6,12 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 ![image](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)
 ![image](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)
-<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)" width="600"/>
-<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)" width="600"/> 
+<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)" width="500"/>
+<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)" width="400"/> 
 
 
 ⚙️ Funcionalidades:
+
 
 🧾 Cadastro, edição e exclusão de produtos
 
@@ -26,7 +27,9 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 🔐 Sistema de autenticação de usuários
 
+
 💻 Tecnologias utilizadas:
+
 
 Python 🐍
 Django==5.0 🕸️
@@ -35,17 +38,23 @@ bootstrap com HTML e CSS
 
 🚧 Como rodar o projeto localmente:
 
+
 git clone https://github.com/Tiago-Monteirox/insonia.git
+
 cd insonia
 
 Crie e ative um ambiente virtual:
+
 python -m venv venv
+
 source venv/bin/activate  # ou venv\Scripts\activate no Windows
 
 Instale as dependências:
+
 pip install -r requirements.txt
 
 🛠️ Criar o banco no PostgreSQL
+
 Abra o terminal do PostgreSQL ou o psql e crie o banco e o usuário (se necessário):
 
 CREATE DATABASE insonia_db;
@@ -59,6 +68,7 @@ ALTER ROLE meu_usuario SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE insonia_db TO meu_usuario;
 
 ✏️ Editar o settings.py
+
 No bloco DATABASES, substitua pelo PostgreSQL:
 
 DATABASES = {
@@ -74,17 +84,22 @@ DATABASES = {
 
 
 Execute as migrações:
+
 python manage.py migrate
 
  🔐 Criar o superusuário:
+ 
 python manage.py createsuperuser
 
 Inicie o servidor: 
+
 python manage.py runserver
 
 Acesse http://127.0.0.1:8000/admin/
 
+
 📥 Importação de Dados via Planilha Excel
+
 O sistema possui um script automatizado para leitura de dados diretamente de uma planilha Excel (.xlsx), o que permite importar produtos em massa de forma prática e rápida para o banco de dados.
 
 Esse recurso é útil, por exemplo, para cadastrar rapidamente uma grande quantidade de itens com informações como:
