@@ -154,7 +154,8 @@ python manage.py runserver
 📥Importação de Dados via Planilha Excel
 <p>&nbsp;</p>
 
-📌 To-do
+📌 To-do:
+
  Implementar testes (porque confiar no código sem testar é um estilo de vida... perigoso)
  
  <p>&nbsp;</p>
