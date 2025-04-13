@@ -11,7 +11,7 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 
 ⚙️ Funcionalidades:
-<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
 🧾 Cadastro, edição e exclusão de produtos
 
