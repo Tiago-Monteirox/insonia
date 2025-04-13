@@ -29,15 +29,16 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 
 💻 Tecnologias utilizadas:
-<p>&nbsp;</p>
 
 Python 🐍
+
 Django==5.0 🕸️
+
 Postgresql
+
 bootstrap com HTML e CSS
 
 🚧 Como rodar o projeto localmente:
-<p>&nbsp;</p>
 
 git clone https://github.com/Tiago-Monteirox/insonia.git
 
@@ -55,9 +56,7 @@ pip install -r requirements.txt
 
 🛠️ Criar o banco no PostgreSQL
 
-
 Abra o terminal do PostgreSQL ou o psql e crie o banco e o usuário (se necessário):
-<p>&nbsp;</p>
 
 CREATE DATABASE insonia_db;
 
