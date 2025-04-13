@@ -66,9 +66,14 @@ source venv/bin/activate  # ou venv\Scripts\activate no Windows
 ⚙️Instale as dependências:
 <p>&nbsp;</p>
 
-pip install -r requirements.txt
-<p>&nbsp;</p>
+pip install django=="5.1.4"
 
+pip install pillow
+
+pip install django-money
+
+pip install psycopg2-binary
+<p>&nbsp;</p>
 
 🛠️Criar o banco no PostgreSQL
 <p>&nbsp;</p>
