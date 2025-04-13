@@ -141,6 +141,8 @@ Acesse http://127.0.0.1:8000/admin/
 
 
 📥 Importação de Dados via Planilha Excel
+<p>&nbsp;</p>
+
 
 O sistema possui um script automatizado para leitura de dados diretamente de uma planilha Excel (.xlsx), o que permite importar produtos em massa de forma prática e rápida para o banco de dados.
 
