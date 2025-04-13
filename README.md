@@ -6,8 +6,8 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 ![image](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)
 ![image](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)
-<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)" width="300"/>
-<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)" width="200"/> 
+<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)" width="200"/>
+<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)" width="50"/> 
 
 
 ⚙️ Funcionalidades:
