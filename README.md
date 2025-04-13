@@ -63,7 +63,7 @@ source venv/bin/activate  # ou venv\Scripts\activate no Windows
 <p>&nbsp;</p>
 
 
-⚙️Instale as dependências:
+⚙️Instale as dependências principais:
 <p>&nbsp;</p>
 
 pip install django=="5.1.4"
