@@ -43,7 +43,7 @@ Insônia é um sistema de gerenciamento de vendas desenvolvido com Django. Permi
 
 ## 🚧 Como rodar o projeto localmente
 
-```bash
+
 git clone https://github.com/Tiago-Monteirox/insonia.git
 cd insonia
 
