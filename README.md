@@ -98,7 +98,9 @@ No bloco DATABASES, substitua pelo PostgreSQL:
 
 DATABASES =
 {
+
     'default': { 
+    
         'ENGINE': 'django.db.backends.postgresql', 
         
         'NAME': 'insonia_db',
