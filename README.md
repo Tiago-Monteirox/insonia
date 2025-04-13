@@ -35,7 +35,7 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 Python 🐍
 
-Django==5.0 🕸️
+Django==5.1.4 🕸️
 
 Postgresql
 
