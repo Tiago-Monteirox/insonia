@@ -11,7 +11,7 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 
 ⚙️ Funcionalidades:
-
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 🧾 Cadastro, edição e exclusão de produtos
 
@@ -29,7 +29,7 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 
 💻 Tecnologias utilizadas:
-
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 Python 🐍
 Django==5.0 🕸️
@@ -37,11 +37,12 @@ Postgresql
 bootstrap com HTML e CSS
 
 🚧 Como rodar o projeto localmente:
-
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 git clone https://github.com/Tiago-Monteirox/insonia.git
 
 cd insonia
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 Crie e ative um ambiente virtual:
 
@@ -50,12 +51,15 @@ python -m venv venv
 source venv/bin/activate  # ou venv\Scripts\activate no Windows
 
 Instale as dependências:
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 pip install -r requirements.txt
 
 🛠️ Criar o banco no PostgreSQL
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 Abra o terminal do PostgreSQL ou o psql e crie o banco e o usuário (se necessário):
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 CREATE DATABASE insonia_db;
 
@@ -68,6 +72,7 @@ ALTER ROLE meu_usuario SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE insonia_db TO meu_usuario;
 
 ✏️ Editar o settings.py
+<p>Texto&nbsp;&nbsp;&nbsp;com&nbsp;&nbsp;&nbsp;vários&nbsp;&nbsp;&nbsp;espaços.</p>
 
 No bloco DATABASES, substitua pelo PostgreSQL:
 
