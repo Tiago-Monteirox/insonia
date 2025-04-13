@@ -36,7 +36,7 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 Python 🐍
 
-Django==5.0 🕸️
+Django==5.1.4 🕸️
 
 Postgresql
 
@@ -64,12 +64,17 @@ source venv/bin/activate  # ou venv\Scripts\activate no Windows
 <p>&nbsp;</p>
 
 
-⚙️Instale as dependências:
+⚙️Instale as dependências principais:
 <p>&nbsp;</p>
 
-pip install -r requirements.txt
-<p>&nbsp;</p>
+pip install django=="5.1.4"
 
+pip install pillow
+
+pip install django-money
+
+pip install psycopg2-binary
+<p>&nbsp;</p>
 
 🛠️Criar o banco no PostgreSQL
 <p>&nbsp;</p>
