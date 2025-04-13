@@ -154,7 +154,10 @@ python manage.py runserver
 📥Importação de Dados via Planilha Excel
 <p>&nbsp;</p>
 
-
+📌 To-do
+ Implementar testes (porque confiar no código sem testar é um estilo de vida... perigoso)
+ 
+ <p>&nbsp;</p>
 O sistema possui um script automatizado para leitura de dados diretamente de uma planilha Excel (.xlsx), o que permite importar produtos em massa de forma prática e rápida para o banco de dados.
 
 Esse recurso é útil, por exemplo, para cadastrar rapidamente uma grande quantidade de itens com informações como:
