@@ -51,7 +51,7 @@ cd insonia
 
 
 
-➡️Crie e ative um ambiente virtual:
+## ➡️Crie e ative um ambiente virtual:
 <p>&nbsp;</p>
 
 python -m venv venv
