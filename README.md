@@ -97,19 +97,12 @@ No bloco DATABASES, substitua pelo PostgreSQL:
 <p>&nbsp;</p>
 
 DATABASES = {
-    'default': {
-    
-    
-        'ENGINE': 'django.db.backends.postgresql',
-        
-        'NAME': 'insonia_db',
-        
+    'default': { 
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': 'insonia_db',   
         'USER': 'meu_usuario',
-        
         'PASSWORD': 'minha_senha',
-        
         'HOST': 'localhost',
-        
         'PORT': '5432',
     }
 }
