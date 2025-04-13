@@ -55,6 +55,7 @@ cd insonia
 
 
 Crie e ative um ambiente virtual:
+<p>&nbsp;</p>
 
 python -m venv venv
 
@@ -63,6 +64,7 @@ source venv/bin/activate  # ou venv\Scripts\activate no Windows
 
 
 Instale as dependências:
+<p>&nbsp;</p>
 
 pip install -r requirements.txt
 <p>&nbsp;</p>
@@ -98,13 +100,22 @@ No bloco DATABASES, substitua pelo PostgreSQL:
 
 
 DATABASES = {
+
     'default': {
+    
+    
         'ENGINE': 'django.db.backends.postgresql',
+        
         'NAME': 'insonia_db',
+        
         'USER': 'meu_usuario',
+        
         'PASSWORD': 'minha_senha',
+        
         'HOST': 'localhost',
+        
         'PORT': '5432',
+        
     }
 }
 
