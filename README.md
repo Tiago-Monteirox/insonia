@@ -6,15 +6,24 @@ Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com dj
 
 ![image](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)
 ![image](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)
+<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/fcd61bad-3a55-4d7e-bc96-64a2ea7bd81b)" width="600"/>
+<img src="[link-da-imagem.png](https://github.com/user-attachments/assets/73577720-e040-47cb-9389-7860eb3d32cf)" width="600"/> 
+
 
 ⚙️ Funcionalidades:
 
 🧾 Cadastro, edição e exclusão de produtos
+
 💰 Registro de vendas e controle de estoque
+
 📊 Filtro de lucro por período
+
 🔍 Busca e filtros inteligentes
+
 📈 Análise de desempenho das vendas
+
 📋 Dashboard simples e intuitivo
+
 🔐 Sistema de autenticação de usuários
 
 💻 Tecnologias utilizadas:
@@ -40,9 +49,13 @@ pip install -r requirements.txt
 Abra o terminal do PostgreSQL ou o psql e crie o banco e o usuário (se necessário):
 
 CREATE DATABASE insonia_db;
+
 CREATE USER meu_usuario WITH PASSWORD 'minha_senha';
+
 ALTER ROLE meu_usuario SET client_encoding TO 'utf8';
+
 ALTER ROLE meu_usuario SET timezone TO 'UTC';
+
 GRANT ALL PRIVILEGES ON DATABASE insonia_db TO meu_usuario;
 
 ✏️ Editar o settings.py
