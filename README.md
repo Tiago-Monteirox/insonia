@@ -1,6 +1,14 @@
-Insônia - Sistema de Vendas de Produtos
+💤 Insônia – Sistema de Vendas de Produtos
 
-Insonia é um sistema de gerenciamento de vendas de produtos desenvolvido com django, ele permite o cadastro e controle de produtos, controle de vendas, análise de lucro por período e muito mais.
+Insônia é um sistema de gerenciamento de vendas desenvolvido com Django. Permite:
+
+Cadastro e controle de produtos
+
+Controle de vendas
+
+Análise de lucro por período
+
+E muito mais (tipo sua ansiedade às 2 da manhã)
 
 🚀 Projeto desenvolvido por Tiago Monteiro – estudante de Análise e Desenvolvimento de Sistemas e apaixonado por Python e Django.
 
