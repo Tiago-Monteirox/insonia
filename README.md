@@ -148,22 +148,21 @@ python manage.py runserver
 
 
 
-📥Importação de Dados via Planilha Excel
-<p>&nbsp;</p>
+## 📥 Importação de Dados via Planilha Excel
 
-📌 To-do:
-
- Implementar testes (porque confiar no código sem testar é um estilo de vida... perigoso)
- 
- <p>&nbsp;</p>
-O sistema possui um script automatizado para leitura de dados diretamente de uma planilha Excel (.xlsx), o que permite importar produtos em massa de forma prática e rápida para o banco de dados.
+O sistema possui um script automatizado para leitura de dados diretamente de uma planilha Excel (.xlsx), permitindo importar produtos em massa para o banco de dados.
 
 Esse recurso é útil, por exemplo, para cadastrar rapidamente uma grande quantidade de itens com informações como:
 
-![image](https://github.com/user-attachments/assets/867d1379-784b-4274-a1dd-e1a7ba14ac4b)
+<img src="https://github.com/user-attachments/assets/867d1379-784b-4274-a1dd-e1a7ba14ac4b" width="600"/>
 
 Esse script faz a leitura da planilha, processa os dados e registra os produtos diretamente no banco utilizando os modelos do Django.
 
-🧠Esse recurso é ideal para quem já tem o estoque organizado em Excel e deseja migrar para o sistema sem precisar cadastrar item por item manualmente.
+🧠 **Esse recurso é ideal para quem já tem o estoque organizado em Excel e deseja migrar para o sistema sem precisar cadastrar item por item manualmente.**
 
-Projeto desenvolvido por mim utilizando python e django para a minha empresa.
+---
+
+## 📌 To-do
+
+- [ ] Implementar testes (porque confiar no código sem testar é um estilo de vida... perigoso)   
+- [ ] Documentação de API
