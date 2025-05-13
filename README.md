@@ -5,13 +5,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-Insônia é um sistema de gerenciamento de vendas desenvolvido com Django. Permite:
-
-> **Cadastro e controle de produtos**, **controle de vendas**, **análise de lucro por período** — e muito mais (tipo sua ansiedade às 2 da manhã).
-
-🚀 Projeto desenvolvido por **Tiago Monteiro** – estudante de Análise e Desenvolvimento de Sistemas e apaixonado por Python e Django (*quase romântico*).
-
----
+Sistema completo de gerenciamento de vendas com backend API RESTful desenvolvido com Django REST Framework por Tiago Monteiro.
 
 ## 🖼️ Imagens do Sistema
 
@@ -19,15 +13,19 @@ Insônia é um sistema de gerenciamento de vendas desenvolvido com Django. Permi
 
 ---
 
-## ⚙️ Funcionalidades
+### Backend (API REST)
+- **CRUD completo via API REST** para todos os modelos principais
+- **Endpoints JSON** para integração com frontend ou apps móveis
+- **Autenticação via Token** para acesso à API
+- **Filtros avançados** diretamente na API (?search=, ?ordering=)
+- **Paginação** dos resultados da API
+- **Serializers** customizados para todos os modelos
 
-- 🧾 Cadastro, edição e exclusão de produtos  
-- 💰 Registro de vendas e controle de estoque  
-- 📊 Filtro de lucro por período  
-- 🔍 Busca e filtros inteligentes  
-- 📈 Análise de desempenho das vendas  
-- 📋 Dashboard simples e intuitivo  
-- 🔐 Sistema de autenticação de usuários  
+### Frontend (Django Admin/Views)
+- 🧾 Cadastro, edição e exclusão de produtos
+- 💰 Registro de vendas e controle de estoque
+- 📊 Filtro de lucro por período
+- 📈 Dashboard analític
 
 <img src="https://github.com/user-attachments/assets/c3a185fe-1bf5-4774-a36a-21faeea3a173" width="800"/>
 
@@ -150,6 +148,22 @@ python manage.py runserver
 
 ✨Acesse http://127.0.0.1:8000/admin/
 <p>&nbsp;</p>
+
+
+📡 Acessando a API
+A API está disponível em http://localhost:8000/api/
+
+Endpoints principais:
+
+GET /api/products/ - Lista todos os produtos
+
+POST /api/products/ - Cria novo produto
+
+GET /api/products/{id}/ - Detalhes do produto
+
+PUT /api/products/{id}/ - Atualiza produto
+
+DELETE /api/products/{id}/ - Remove produto
 
 
 
