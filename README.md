@@ -150,7 +150,9 @@ python manage.py runserver
 <p>&nbsp;</p>
 
 
-📡 Acessando a API
+📡 Acessando a API:
+
+
 A API está disponível em http://localhost:8000/api/
 
 Endpoints principais:
