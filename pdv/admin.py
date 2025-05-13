@@ -37,8 +37,6 @@ admin_site = MyAdminSite(name='myadmin')
 
 class ItemVendaInline(admin.TabularInline):
     model = ItemVenda
-    extra = 1
-    fields = ['produto', 'quantidade', 'valor_venda']
 
 class VendaAdmin(admin.ModelAdmin):
     inlines = [ItemVendaInline]

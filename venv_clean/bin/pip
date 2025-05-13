@@ -1,4 +1,4 @@
-#!/home/tiago/work/insonia/venv_clean/bin/python
+#!/home/tiagomonteiro/projects/insonia/venv_clean/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

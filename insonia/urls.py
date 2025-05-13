@@ -21,9 +21,10 @@ from django.contrib import admin
 from django.urls import path, include  # Make sure you include this line
 
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('lojapp.urls')),
+    path('api/', include('api.urls')),
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

@@ -40,8 +40,23 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lojapp',
     'pdv',
+    'user',
+    'rest_framework',
+    'djmoney',
+ 
+]
     
-] 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
 
 JAZZMIN_SETTINGS = {
     
@@ -85,12 +100,8 @@ WSGI_APPLICATION = 'insonia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'insonia',
-        'HOST': '127.0.0.1',
-        'USER': 'tiago',
-        'PASSWORD': '123',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

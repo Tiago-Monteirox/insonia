@@ -1,0 +1,74 @@
+# Diretórios e ambientes virtuais
+
+venv/
+.env/
+.venv/
+ENV/
+virtualenv/
+venv_clean/
+venv.bak/
+
+
+# Arquivos Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configurações do IDE
+
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Arquivos de ambiente
+
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.sample
+.env*.local
+
+# Arquivos de configuração local
+
+settings/local.py
+.local.py
+
+# Arquivos de bancos de dados SQLite
+
+*.sqlite3
+*.db
+*.db-journal
+
+# Arquivos estáticos e de mídia (Django)
+
+/staticfiles/
+/media/
+
+# Logs r arquivos de desenvolvimento
+
+*.log
+logs/
+npm_debug.log
+yarn-debug.log
+yarn-error.log
+
+# Arquivos de cache
+
+.pytest_cache/
+.mypy_cache/
+
+# Arquivos de distribuição e build
+
+dist/
+build/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+
+

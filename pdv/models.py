@@ -1,90 +1,200 @@
+from decimal import Decimal
 from django.db import models
 from django.conf import settings
-from decimal import Decimal
 from djmoney.models.fields import MoneyField
 from djmoney.money import Money
+from django.core.exceptions import ValidationError
+from django.utils import timezone
+from lojapp.models import Produto 
+
+
 
 class Venda(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    data_venda = models.DateTimeField(auto_now_add=True)
+    """
+    Modelo para representar uma venda.
+    """
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Usuário"
+    )
+    data_venda = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Data da Venda"
+    )
+    valor_total = MoneyField(
+        max_digits=14,
+        decimal_places=2,
+        default_currency='BRL',
+        null=True,  # Permitir nulo para inicialização
+        blank=True,
+        verbose_name="Valor Total"
+    )
+    lucro_total = MoneyField(
+        max_digits=14,
+        decimal_places=2,
+        default_currency='BRL',
+        null=True,  # Permitir nulo para inicialização
+        blank=True,
+        verbose_name="Lucro Total"
+    )
 
-    @classmethod 
-    def calcular_valor_total_vendas(cls):
-        return sum(venda.total_venda for venda in cls.objects.all())
-    
-    @classmethod
-    def calcular_valor_total_por_periodo(cls, data_inicio, data_fim):
-        vendas_no_periodo = cls.objects.filter(data_venda__range=[data_inicio, data_fim])
-        return sum(venda.total_venda for venda in vendas_no_periodo)
-    
-    @classmethod
-    def calcular_lucro_total_vendas(cls):
-        return sum(venda.lucro_total for venda in cls.objects.all())
-    
-    @classmethod
-    def calcular_lucro_total_por_periodo(cls, data_inicio, data_fim):
-        vendas_no_periodo = cls.objects.filter(data_venda__range=[data_inicio, data_fim])
-        return sum(venda.lucro_total for venda in vendas_no_periodo)
+    class Meta:
+        verbose_name = "Venda"
+        verbose_name_plural = "Vendas"
+        ordering = ['-data_venda']
 
-    @property
-    def total_venda(self):
-        return sum(item.calcular_valor_total_venda() for item in self.itens_venda.all())
-    
-    @property
-    def lucro_total(self):
-        total_venda = self.total_venda.amount if isinstance(self.total_venda, Money) else self.total_venda
-        preco_custo_total = self.preco_custo_total()
-        preco_custo_total = preco_custo_total.amount if isinstance(preco_custo_total, Money) else preco_custo_total
-        return total_venda - preco_custo_total
+    def __str__(self):
+        return f"Venda #{self.id} - {self.data_venda.strftime('%d/%m/%Y')}"
 
-
-
-    def preco_custo_total(self):
-        return sum(item.calcular_valor_total_custo() for item in self.itens_venda.all())
-
-    def calcular_valores(self):
-        # Atualiza o campo valor_venda da instância de Venda
-        self.valor_venda = self.total_venda
-
-        # Calcula o lucro
-        self.lucro = self.lucro_total
-
-        # Salva a instância de Venda após calcular os valores
-        super().save()
-
-class ItemVenda(models.Model):
-    venda = models.ForeignKey(Venda, on_delete=models.CASCADE, related_name='itens_venda')
-    produto = models.ForeignKey('lojapp.Produto', on_delete=models.CASCADE)
-    quantidade = models.PositiveIntegerField()
-    valor_venda = MoneyField(max_digits=10, decimal_places=2, default=0)
-
-    def calcular_valor_total_venda(self):
-        if isinstance(self.valor_venda, Money):
-            total = self.valor_venda * self.quantidade
-            return Money(amount=total.amount, currency=self.valor_venda.currency)
-        else:
-            raise ValueError("valor_venda deve ser uma instância de Money")
-        
-    def calcular_valor_total_custo(self):
-        return self.produto.preco_custo * self.quantidade
+    def clean(self):
+        """Validações antes de salvar"""
+        if self.valor_total and self.valor_total.amount < 0:
+            raise ValidationError("O valor total não pode ser negativo")
+        if self.lucro_total and self.lucro_total.amount < 0:
+            raise ValidationError("O lucro não pode ser negativo")
 
     def save(self, *args, **kwargs):
-        # Certifique-se de que o valor_venda é não nulo e não negativo
-        if self.valor_venda is None or self.valor_venda < Money(0, self.valor_venda.currency):
-            raise ValueError("O valor de venda deve ser especificado e não pode ser negativo.")
+        """
+        Sobrescreve o método save para calcular os totais antes de salvar.
+        """
+        super().save(*args, **kwargs)  # Salva primeiro para ter o ID
+        self.calcular_totais() # Garante que os totais são calculados e salvos
+        # Não precisa salvar novamente aqui, pois o calcular_totais já faz isso.
 
-        # Calcula o valor de venda antes de salvar
-        self.valor_venda = self.calcular_valor_total_venda()
+    def calcular_totais(self):
+        """Calcula totais automaticamente"""
+        self.valor_total = sum(
+            (item.subtotal for item in self.itens.all()),
+            Money(0, 'BRL')
+        )
+        self.lucro_total = sum(
+            (item.lucro for item in self.itens.all()),
+            Money(0, 'BRL')
+        )
+        self.save(update_fields=['valor_total', 'lucro_total'])  # Salva os totais calculados
 
-        # Atualiza a quantidade disponível do produto
-        self.atualizar_quantidade_produto()
+    @classmethod
+    def calcular_valor_total_vendas(cls):
+        """Calcula o valor total de todas as vendas."""
+        return sum(venda.valor_total for venda in cls.objects.all())
 
+    @classmethod
+    def calcular_valor_total_por_periodo(cls, data_inicio, data_fim):
+        """Calcula o valor total das vendas em um período."""
+        resultado = cls.objects.filter(
+            data_venda__range=[data_inicio, data_fim]
+        ).aggregate(total=models.Sum('valor_total'))
+        return resultado['total'] or Money(0, 'BRL')
+
+    @classmethod
+    def calcular_lucro_total_vendas(cls):
+        """Calcula o lucro total de todas as vendas."""
+        resultado = cls.objects.aggregate(total=models.Sum('lucro_total'))
+        return resultado['total'] or Money(0, 'BRL')
+
+    @classmethod
+    def calcular_lucro_total_por_periodo(cls, data_inicio, data_fim):
+        """Calcula o lucro total das vendas em um período."""
+        resultado = cls.objects.filter(
+            data_venda__range=[data_inicio, data_fim]
+        ).aggregate(total=models.Sum('lucro_total'))
+        return resultado['total'] or Money(0, 'BRL')
+
+
+
+class ItemVenda(models.Model):
+    venda = models.ForeignKey(
+        'Venda', 
+        on_delete=models.CASCADE, 
+        related_name='itens',
+        verbose_name="Venda"
+    )
+    produto = models.ForeignKey(
+        Produto,
+        on_delete=models.PROTECT,
+        verbose_name="Produto"
+    )
+    quantidade = models.PositiveIntegerField(
+        default=1,
+        verbose_name="Quantidade"
+    )
+    preco_venda = MoneyField(
+        max_digits=14,
+        decimal_places=2,
+        default_currency='BRL',
+        default=Decimal('0.00'),
+        verbose_name="Preço de Venda"
+    )
+    preco_custo = MoneyField(
+        max_digits=14,
+        decimal_places=2,
+        default_currency='BRL',
+        default=Decimal('0.00'),
+        verbose_name="Preço de Custo"
+    )
+
+    class Meta:
+        verbose_name = "Item de Venda"
+        verbose_name_plural = "Itens de Venda"
+        ordering = ['-id']
+
+    def __str__(self):
+        return f"{self.quantidade}x {self.produto.name}"
+
+    @property
+    def subtotal(self):
+        """Calcula o valor total do item"""
+        return self.preco_venda * self.quantidade
+
+    @property
+    def lucro(self):
+        """Calcula o lucro do item"""
+        return (self.preco_venda - self.preco_custo) * self.quantidade
+
+    def clean(self):
+        """Validações antes de salvar"""
+        if self.quantidade <= 0:
+            raise ValidationError("A quantidade deve ser maior que zero")
+        
+        if self.preco_venda.amount <= 0:
+            raise ValidationError("O preço de venda deve ser positivo")
+        
+        if self.preco_custo.amount <= 0:
+            raise ValidationError("O preço de custo deve ser positivo")
+        
+        if self.preco_venda < self.preco_custo:
+            raise ValidationError("O preço de venda não pode ser menor que o preço de custo")
+
+        # Verifica estoque
+        if self.produto.quantidade < self.quantidade:
+            raise ValidationError(
+                f"Estoque insuficiente. Disponível: {self.produto.quantidade}"
+            )
+
+    def save(self, *args, **kwargs):
+        """Sobrescreve o save para atualizar estoque e totais"""
+        self.full_clean()
+        
+        # Se for um novo item ou a quantidade foi alterada
+        if not self.pk or self.quantidade != ItemVenda.objects.get(pk=self.pk).quantidade:
+            self.atualizar_estoque()
+        
         super().save(*args, **kwargs)
+        self.venda.calcular_totais()
 
-    def atualizar_quantidade_produto(self):
-        # Reduz a quantidade disponível do produto
-        nova_quantidade = self.produto.quantidade - self.quantidade
-        if nova_quantidade < 0:
-            raise ValueError("Quantidade insuficiente do produto disponível.")
-        self.produto.quantidade = nova_quantidade
+    def atualizar_estoque(self):
+        """Atualiza o estoque do produto"""
+        if self.pk:  # Se for uma atualização
+            old_item = ItemVenda.objects.get(pk=self.pk)
+            self.produto.quantidade += old_item.quantidade
+        
+        self.produto.quantidade -= self.quantidade
         self.produto.save()
+
+    def delete(self, *args, **kwargs):
+        """Sobrescreve o delete para atualizar estoque"""
+        self.produto.quantidade += self.quantidade
+        self.produto.save()
+        super().delete(*args, **kwargs)
+        self.venda.calcular_totais()

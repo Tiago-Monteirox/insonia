@@ -1,10 +1,11 @@
+import os
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-import os
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from djmoney.models.fields import MoneyField
+from djmoney.money import Money
+from decimal import Decimal, InvalidOperation
 
 class Categoria(models.Model):
     name = models.CharField(max_length=200, db_index=True)
@@ -61,35 +62,86 @@ class Marca(models.Model):
 
 class Produto(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    categoria = models.ForeignKey(Categoria, on_delete = models.CASCADE, null=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=True)
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE, null=True, blank=True)
     quantidade = models.PositiveIntegerField(blank=True, null=True)
-    preco_venda = MoneyField(max_digits=14, decimal_places=2, default_currency='BRL', verbose_name='Preço', blank=True, null=True)
-    preco_venda_promocional = MoneyField(max_digits=14, decimal_places=2, default_currency='BRL', verbose_name='Preço promocional', blank=True, null=True)
+    preco_venda = MoneyField(
+        max_digits=14, 
+        decimal_places=2, 
+        default_currency='BRL',
+        verbose_name='Preço de venda',
+        blank=True, 
+        null=True
+    )
+    preco_venda_promocional = MoneyField(
+        max_digits=14, 
+        decimal_places=2, 
+        default_currency='BRL',
+        verbose_name='Preço promocional',
+        blank=True, 
+        null=True
+    )
     descricao_curta = models.TextField(max_length=100, blank=True, null=True)
-    # imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/', blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    preco_custo = MoneyField(max_digits=14, decimal_places=2, default_currency='BRL', verbose_name='Preço de custo', blank=False, null=False)
+    preco_custo = MoneyField(
+        max_digits=14, 
+        decimal_places=2, 
+        default_currency='BRL',
+        verbose_name='Preço de custo',
+        blank=False, 
+        null=False
+    )
     
     def __str__(self):
         return self.name
 
+    def clean_precos(self):
+        def normalizar(valor):
+            if isinstance(valor, str):
+                valor = valor.replace('R$', '').replace(',', '.').strip()
+            try:
+                return Decimal(valor)
+            except (InvalidOperation, TypeError, AttributeError):
+                return Decimal('0.00')
+
+        if self.preco_venda is not None:
+            self.preco_venda = Money(
+                normalizar(self.preco_venda.amount if hasattr(self.preco_venda, 'amount') else normalizar(self.preco_venda)), 
+                'BRL'
+            )
+        
+        if self.preco_venda_promocional is not None:
+            self.preco_venda_promocional = Money(
+                normalizar(self.preco_venda_promocional.amount if hasattr(self.preco_venda_promocional, 'amount') else normalizar(self.preco_venda_promocional)), 
+                'BRL'
+            )
+        
+        self.preco_custo = Money(
+            normalizar(self.preco_custo.amount if hasattr(self.preco_custo, 'amount') else normalizar(self.preco_custo)), 
+            'BRL'
+        )
 
     def clean(self):
-        # Validação dos preços para assegurar que não são negativos
-        if self.preco_venda is not None and self.preco_venda.amount < 0:
+        # Validação básica dos preços
+        if self.preco_venda and self.preco_venda.amount < Decimal('0.00'):
             raise ValidationError('O preço de venda não pode ser negativo.')
-        if self.preco_venda_promocional is not None and self.preco_venda_promocional.amount < 0:
+        
+        if self.preco_venda_promocional and self.preco_venda_promocional.amount < Decimal('0.00'):
             raise ValidationError('O preço promocional não pode ser negativo.')
-        if self.preco_custo is not None and self.preco_custo.amount < 0:
+        
+        if self.preco_custo.amount < Decimal('0.00'):
             raise ValidationError('O preço de custo não pode ser negativo.')
-
-        # Validação para assegurar que o preço promocional não é maior que o preço normalDeslizando no colo do pai - mc menor da vg - triz
+        
+        # Validação de preço promocional menor que preço normal
+        if self.preco_venda and self.preco_venda_promocional:
+            if self.preco_venda_promocional.amount >= self.preco_venda.amount:
+                raise ValidationError('O preço promocional deve ser menor que o preço normal.')
 
     def save(self, *args, **kwargs):
-        self.full_clean()  # Chama o método clean para validação
-        super(Produto, self).save(*args, **kwargs)
-
+        self.clean_precos()
+        self.full_clean()
+        super().save(*args, **kwargs)
+        
 class ProdutoImagem(models.Model):
     produto = models.ForeignKey(Produto, related_name='imagens', on_delete=models.CASCADE)
     imagem = models.ImageField(upload_to='produto_imagens/%Y/%m/')
@@ -148,32 +200,3 @@ class Variacao(models.Model):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# class Produto(models.Model):
-#     name = models.CharField(max_length=100)
-#     quantidade = models.PositiveIntegerField(blank=True, null=True)
-#     preco_venda = models.FloatField(verbose_name='Valor', blank=True, null=True)
-#     descricao_curta = models.TextField(max_length=100,blank=True, null=True)
-#     imagem = models.ImageField(
-#         upload_to='produto_imagens/%Y/%m/', blank=True, null=True)
-#     slug = models.SlugField(unique=True, blank=True, null=True)
-#     preco_custo = models.FloatField(verbose_name='Preço')
-
-#     def __str__(self):
-#         return self.name
