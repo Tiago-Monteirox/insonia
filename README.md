@@ -81,10 +81,13 @@ pip install psycopg2-binary
 Abra o terminal do PostgreSQL ou o psql e crie o banco e o usuário (se necessário):
 <p>&nbsp;</p>
 
+sudo apt install postgresql postgresql-contrib
+
+sudo -u postgres psql
 
 CREATE DATABASE insonia_db;
 
-CREATE USER meu_usuario WITH PASSWORD 'minha_senha';
+CREATE USER usuario WITH PASSWORD 'senha_forte' SUPERUSER;
 
 ALTER ROLE meu_usuario SET client_encoding TO 'utf8';
 
