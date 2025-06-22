@@ -43,11 +43,18 @@ INSTALLED_APPS = [
     'user',
     'rest_framework',
     'djmoney',
+    'django_filters',
+    'graphene_django',
  
-]
+] 
     
+INTERNAL_IPS = ['127.0.0.1']
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',  
@@ -55,6 +62,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
+}
+
+# Graphene settings
+GRAPHENE = {
+    "SCHEMA": "lojapp.schema.schema",
+    "MIDDLEWARE": [],
 }
 
 

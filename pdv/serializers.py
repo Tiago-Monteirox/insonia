@@ -13,7 +13,7 @@ class ProdutoSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Produto
-        fields = ['id', 'name']  # Inclua outros campos se necessário
+        fields = ['id', 'name']  
 
 
 class ItemVendaSerializer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class ItemVendaSerializer(serializers.ModelSerializer):
         queryset=Produto.objects.all(),
         source='produto',
         write_only=True,
-        required=True # Adicionei required=True
+        required=True 
     )
     quantidade = serializers.IntegerField(min_value=Decimal('0'))
     preco_venda = serializers.DecimalField(
@@ -36,7 +36,7 @@ class ItemVendaSerializer(serializers.ModelSerializer):
         model = ItemVenda
         fields = [
             'id', 'produto', 'produto_id', 'quantidade',
-            'preco_venda',  # Corrigido nome do campo
+            'preco_venda', 
             'subtotal', 'lucro'
         ]
         read_only_fields = ['subtotal', 'lucro']
@@ -67,11 +67,11 @@ class VendaSerializer(serializers.ModelSerializer):
     """
     Serializer para o modelo Venda.
     """
-    itens = ItemVendaSerializer(many=True) # Mudado para itens
+    itens = ItemVendaSerializer(many=True) 
     usuario = serializers.StringRelatedField()
     valor_total = serializers.DecimalField(
         max_digits=14, decimal_places=2, read_only=True
-    )  # Adicionado valor_total
+    ) 
     lucro_total = serializers.DecimalField(
         max_digits=14, decimal_places=2, read_only=True
     )
@@ -85,11 +85,10 @@ class VendaSerializer(serializers.ModelSerializer):
         read_only_fields = ['usuario', 'data_venda', 'valor_total', 'lucro_total']
 
     def create(self, validated_data):
-        itens_data = validated_data.pop('itens') # Mudado para itens
+        itens_data = validated_data.pop('itens') 
         venda = Venda.objects.create(**validated_data)
 
         for item_data in itens_data:
-            # Garante que o produto_id está presente
             if 'produto_id' not in item_data:
                 raise serializers.ValidationError(
                     "O campo 'produto_id' é obrigatório para cada item."
