@@ -54,13 +54,20 @@ class Venda(models.Model):
         if self.lucro_total and self.lucro_total.amount < 0:
             raise ValidationError("O lucro não pode ser negativo")
 
-    def save(self, *args, **kwargs):
+  
         """
         Sobrescreve o método save para calcular os totais antes de salvar.
         """
-        super().save(*args, **kwargs)  # Salva primeiro para ter o ID
-        self.calcular_totais() # Garante que os totais são calculados e salvos
-        # Não precisa salvar novamente aqui, pois o calcular_totais já faz isso.
+        # super().save(*args, **kwargs)  # Salva primeiro para ter o ID
+        # self.calcular_totais() # Garante que os totais são calculados e salvos
+        # # Não precisa salvar novamente aqui, pois o calcular_totais já faz isso.
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)  # Salva primeiro para ter o ID
+        self.calcular_totais()  # Garante que os totais são calculados e salvos
+
 
     def calcular_totais(self):
         """Calcula totais automaticamente"""
@@ -72,7 +79,7 @@ class Venda(models.Model):
             (item.lucro for item in self.itens.all()),
             Money(0, 'BRL')
         )
-        self.save(update_fields=['valor_total', 'lucro_total'])  # Salva os totais calculados
+        super().save(update_fields=['valor_total', 'lucro_total'])  # Salva os totais calculados
 
     @classmethod
     def calcular_valor_total_vendas(cls):

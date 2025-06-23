@@ -66,7 +66,7 @@ REST_FRAMEWORK = {
 
 # Graphene settings
 GRAPHENE = {
-    "SCHEMA": "lojapp.schema.schema",
+    "SCHEMA": "core.schema.schema",
     "MIDDLEWARE": [],
 }
 

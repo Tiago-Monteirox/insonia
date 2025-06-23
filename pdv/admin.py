@@ -44,12 +44,12 @@ class VendaAdmin(admin.ModelAdmin):
     actions = ['mostrar_valor_total_vendas', 'mostrar_lucro_total_vendas']
     
     def get_produtos(self, obj):
-        return ", ".join([item.produto.name for item in obj.itens_venda.all()])
+        return ", ".join([item.produto.name for item in obj.itens.all()])
     get_produtos.short_description = 'Produtos'
 
     # Adicione o total_venda à lista de exibição
     def total_venda(self, obj):
-        return obj.total_venda
+        return obj.valor_total
     total_venda.short_description = 'Total Venda'
 
     # Adicione o lucro à lista de exibição
