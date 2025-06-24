@@ -184,9 +184,12 @@ class ItemVenda(models.Model):
         self.full_clean()
         
         # Se for um novo item ou a quantidade foi alterada
-        if not self.pk or self.quantidade != ItemVenda.objects.get(pk=self.pk).quantidade:
-            self.atualizar_estoque()
-        
+        if self.pk:
+            old_item = ItemVenda.objects.get(pk=self.pk)
+            self.produto.quantidade +- old_item.quantidade  
+            
+        self.produto.quantidade -= self.quantidade
+
         super().save(*args, **kwargs)
         self.venda.calcular_totais()
 
