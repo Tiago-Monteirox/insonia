@@ -183,12 +183,12 @@ class ItemVenda(models.Model):
         """Sobrescreve o save para atualizar estoque e totais"""
         self.full_clean()
         
-        # Se for um novo item ou a quantidade foi alterada
         if self.pk:
             old_item = ItemVenda.objects.get(pk=self.pk)
-            self.produto.quantidade +- old_item.quantidade  
+            self.produto.quantidade += old_item.quantidade  
             
         self.produto.quantidade -= self.quantidade
+        self.produto.save()
 
         super().save(*args, **kwargs)
         self.venda.calcular_totais()
