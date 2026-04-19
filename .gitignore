@@ -1,11 +1,12 @@
 # Diretórios e ambientes virtuais
 
 venv/
+venv_clean/
+venvclean/
 .env/
 .venv/
 ENV/
 virtualenv/
-venv_clean/
 venv.bak/
 
 
