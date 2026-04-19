@@ -10,7 +10,7 @@ dependencies = [
     "django-filter==25.2",
     "django-money==3.5.3",
     "py-moneyed==3.0",
-    "pillow==11.2.1",
+    "pillow==12.2.0",
     "psycopg2-binary==2.9.10",
     "boto3==1.37.33",
     "asgiref==3.11.1",
