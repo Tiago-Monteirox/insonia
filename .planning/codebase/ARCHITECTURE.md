@@ -1,0 +1,140 @@
+# Architecture
+
+**Analysis Date:** 2026-04-18
+
+## Pattern Overview
+
+**Overall:** Django monolith with dual API surface — REST (Django REST Framework) and GraphQL (graphene-django) served from the same process. The project is a retail/point-of-sale backend with no frontend templates beyond Django Admin; all data access is through the two API layers.
+
+**Key Characteristics:**
+- Single Django process; no microservices or async workers
+- Two parallel API layers (REST at `/api/` and GraphQL at `/graphql/`) covering the same domain models
+- Domain split into two feature apps (`lojapp` for catalog, `pdv` for sales); a third app (`user`) exists but has no models
+- Business logic lives in model `save()` and `clean()` methods, not in a separate service layer
+- Currency handled throughout via `django-money` (`MoneyField`, `Money` objects) with BRL as the default currency
+
+## Layers
+
+**Project Config (`insonia/`):**
+- Purpose: Django project settings, root URL routing, WSGI/ASGI entry points
+- Location: `insonia/`
+- Contains: `settings.py`, `urls.py`, `wsgi.py`, `asgi.py`, `utils/`
+- Depends on: Nothing (is the root)
+- Used by: Django's entry points
+
+**GraphQL Root (`core/`):**
+- Purpose: Aggregates per-app GraphQL schemas into a single schema exposed at `/graphql/`
+- Location: `core/schema.py`
+- Contains: Root `Query` (inherits `lojapp.schema.Query` + `pdv.schema.Query`) and root `Mutation` (inherits `pdv.schema.Mutation`)
+- Depends on: `lojapp.schema`, `pdv.schema`
+- Used by: `insonia/settings.py` (`GRAPHENE["SCHEMA"]`)
+
+**REST API Gateway (`api/`):**
+- Purpose: Centralised URL router that registers ViewSets from both `lojapp` and `pdv`
+- Location: `api/urls.py`
+- Contains: DRF `DefaultRouter` registrations, `rest_framework.urls` for session/token auth
+- Depends on: `lojapp.views`, `pdv.views`
+- Used by: `insonia/urls.py` at prefix `api/`
+
+**Catalog App (`lojapp/`):**
+- Purpose: Product catalog — categories, brands, products, images, and product variations
+- Location: `lojapp/`
+- Contains: models, serializers, viewsets, GraphQL schema, admin configuration, management commands
+- Depends on: Nothing (is the leaf domain layer)
+- Used by: `pdv` (imports `Produto`), `api/urls.py`, `core/schema.py`
+
+**POS App (`pdv/`):**
+- Purpose: Point-of-sale — sales transactions (`Venda`) and line items (`ItemVenda`)
+- Location: `pdv/`
+- Contains: models, serializers, viewsets, GraphQL schema, admin (with custom `AdminSite`), forms
+- Depends on: `lojapp.models.Produto` (FK), `django.contrib.auth.User` (FK)
+- Used by: `api/urls.py`, `core/schema.py`
+
+**User App (`user/`):**
+- Purpose: Placeholder for future user-profile extensions
+- Location: `user/`
+- Contains: empty `models.py`, `views.py`, `urls.py` (no registered routes); `tests.py`
+- Depends on: Django's built-in `auth.User` (used by `pdv` instead)
+- Used by: Nothing currently
+
+## Data Flow
+
+**REST — Create a Sale:**
+1. Client POSTs to `POST /api/vendas/` with `VendaSerializer` payload
+2. `VendaViewSet.perform_create()` calls `serializer.save()`, which creates `Venda` and nested `ItemVenda` records
+3. `VendaSerializer.create()` calls `venda.calcular_totais()` after all items are persisted
+4. `calcular_totais()` iterates `self.itens.all()`, sums `ItemVenda.subtotal` and `ItemVenda.lucro` (both properties), and writes back with `super().save(update_fields=[...])`
+5. `ItemVenda.save()` decrements `Produto.quantidade` (stock) on creation
+
+**GraphQL — Create a Sale:**
+1. Client sends `criarVenda` mutation with `CriarVendaInput` (userId + list of `ItemVendaInput`)
+2. `CriarVenda.mutate()` fetches `User` and creates `Venda`, then loops over items
+3. For each item: verifies stock via `verificar_estoque()`, creates `ItemVenda`, calls `venda.calcular_totais()`
+4. Returns `VendaType` with camelCase field aliases (`valorTotal`, `lucroTotal`, `dataVenda`)
+
+**State Management:**
+- No in-memory or cache state; all state lives in SQLite (`db.sqlite3`)
+- `Venda.valor_total` and `lucro_total` are denormalised calculated columns recalculated on every save/delete of `ItemVenda`
+- `Produto.quantidade` is decremented on `ItemVenda` creation and restored on deletion
+
+## Key Abstractions
+
+**MoneyField / Money:**
+- Purpose: Stores monetary values as amount + currency pair; prevents bare decimal arithmetic on prices
+- Examples: `lojapp/models.py`, `pdv/models.py`, `lojapp/serializers.py`
+- Pattern: `MoneyField(max_digits=14, decimal_places=2, default_currency='BRL')`; custom `MoneyObjectType` in both GraphQL schemas serialises to `{amount: float, currency: str}`
+
+**DjangoObjectType (GraphQL):**
+- Purpose: Auto-generates GraphQL types from Django models via `graphene_django`
+- Examples: `lojapp/schema.py` (`ProdutoType`, `CategoriaType`, etc.), `pdv/schema.py` (`VendaType`, `ItemVendaType`)
+- Pattern: Subclass `DjangoObjectType`, declare `fields = "__all__"`, then add custom camelCase resolver methods for Money fields and relations
+
+**ModelViewSet (REST):**
+- Purpose: Full CRUD endpoints generated by DRF router
+- Examples: `lojapp/views.py`, `pdv/views.py`
+- Pattern: Subclass `viewsets.ModelViewSet`, set `queryset` and `serializer_class`; override `perform_create`/`perform_update` when post-save side-effects (total recalculation) are needed
+
+**Custom AdminSite:**
+- Purpose: `pdv/admin.py` replaces the default `admin.site` with a custom `MyAdminSite` that controls model ordering in the sidebar and injects a statistics view
+- Pattern: `admin.site = admin_site` at module end; both `lojapp` and `pdv` models are registered on this custom site
+
+## Entry Points
+
+**WSGI:**
+- Location: `insonia/wsgi.py`
+- Triggers: Production HTTP server (Gunicorn/uWSGI)
+- Responsibilities: Bootstrap Django application
+
+**manage.py:**
+- Location: `manage.py`
+- Triggers: CLI (`runserver`, `migrate`, management commands)
+- Responsibilities: Development server, migrations, custom data-import commands
+
+**GraphQL Endpoint:**
+- Location: `insonia/urls.py` → `/graphql/`
+- Triggers: Any HTTP client; GraphiQL browser IDE enabled
+- Responsibilities: Query and mutation entry point; CSRF exempt
+
+**REST API:**
+- Location: `insonia/urls.py` → `/api/` → `api/urls.py`
+- Triggers: HTTP clients with Token or Session auth
+- Responsibilities: Full CRUD for all domain models
+
+## Error Handling
+
+**Strategy:** Validation errors raised in model `clean()` / `full_clean()` propagate as `django.core.exceptions.ValidationError`; serializers re-raise as DRF `ValidationError` (HTTP 400). GraphQL mutations return bare Python exceptions as GraphQL errors (no structured error envelope).
+
+**Patterns:**
+- Model-level: `clean()` raises `ValidationError` for price and stock constraints; called from `save()` via `full_clean()`
+- Serializer-level: `validate()` methods duplicate some model-level checks for early REST-layer rejection
+- GraphQL: unhandled `Venda.DoesNotExist` / `ItemVenda.DoesNotExist` are caught in mutation `mutate()` and returned as `sucesso=False` with a `mensagem` field
+
+## Cross-Cutting Concerns
+
+**Logging:** None configured; Django default (console, WARNING level in production)
+**Validation:** Duplicated across three layers — model `clean()`, DRF serializer `validate()`, and GraphQL mutation `mutate()` — without a shared validation service
+**Authentication:** DRF endpoints require `TokenAuthentication` or `SessionAuthentication` (global default in settings); GraphQL endpoint is CSRF-exempt with no authentication middleware applied — effectively public
+
+---
+
+*Architecture analysis: 2026-04-18*
