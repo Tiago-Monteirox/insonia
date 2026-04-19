@@ -7,7 +7,6 @@ from moneyed import Money
 from django.contrib.auth.models import User
 from django.db import transaction
 
-#Utilitário para verificar estoque
 
 def verificar_estoque(produto, quantidade):
     if produto.quantidade < quantidade:
@@ -89,6 +88,7 @@ class CriarVenda(graphene.Mutation):
         
     venda = graphene.Field(VendaType)    
 
+    @transaction.atomic
     def mutate(self, info, input):
         usuario = User.objects.get(pk=input.usuarioId)
 
@@ -111,7 +111,7 @@ class CriarVenda(graphene.Mutation):
                 preco_custo=produto.preco_custo
             )
 
-            venda.calcular_totais()  # Atualiza os valores totais da venda
+        venda.calcular_totais()  # Atualiza os valores totais da venda
         return CriarVenda(venda=venda)
     
 
