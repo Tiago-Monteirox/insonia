@@ -1,0 +1,148 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>INSÔNIA | Meus pedidos</title>
+    <link rel="stylesheet" href="{% static 'files/assets/css/insomnia-storefront.css' %}">
+</head>
+<body>
+    <main class="storefront orders-page">
+        {% include "lojapp/includes/store_header.html" %}
+
+        <section class="account-hero shell">
+            <p class="eyebrow">Área do cliente</p>
+            <div class="account-hero-grid">
+                <div>
+                    <h1 class="account-title">Meus pedidos</h1>
+                    <p class="account-description">
+                        Acompanhe suas compras, veja o andamento do pagamento, envio e entrega em tempo real.
+                    </p>
+                </div>
+                <div class="account-status">
+                    <span>Resumo</span>
+                    <strong>3 pedidos acompanhados</strong>
+                    <p>Última atualização demonstrativa: hoje, 18h40.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="orders-dashboard shell" aria-label="Lista de pedidos">
+            <article class="tracking-card">
+                <div class="tracking-header">
+                    <div>
+                        <span>Pedido #IN-1048</span>
+                        <h2>Drop noturno completo</h2>
+                        <p>Jaqueta Line, Camiseta Eye e Calça Slim Cargo</p>
+                    </div>
+                    <div class="tracking-summary">
+                        <strong>R$ 789,70</strong>
+                        <span class="status-pill is-shipping">Enviado</span>
+                    </div>
+                </div>
+
+                <div class="tracking-steps" aria-label="Status do pedido #IN-1048">
+                    <div class="tracking-step is-complete">
+                        <span></span>
+                        <strong>Confirmado</strong>
+                        <p>Pedido recebido</p>
+                    </div>
+                    <div class="tracking-step is-complete">
+                        <span></span>
+                        <strong>Pagamento aceito</strong>
+                        <p>Cartão aprovado</p>
+                    </div>
+                    <div class="tracking-step is-current">
+                        <span></span>
+                        <strong>Enviado</strong>
+                        <p>A caminho</p>
+                    </div>
+                    <div class="tracking-step">
+                        <span></span>
+                        <strong>Entregue</strong>
+                        <p>Aguardando entrega</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tracking-card">
+                <div class="tracking-header">
+                    <div>
+                        <span>Pedido #IN-1032</span>
+                        <h2>Kit skatewear essencial</h2>
+                        <p>Overshirt Grafite e Camiseta Eye</p>
+                    </div>
+                    <div class="tracking-summary">
+                        <strong>R$ 469,80</strong>
+                        <span class="status-pill is-delivered">Entregue</span>
+                    </div>
+                </div>
+
+                <div class="tracking-steps" aria-label="Status do pedido #IN-1032">
+                    <div class="tracking-step is-complete">
+                        <span></span>
+                        <strong>Confirmado</strong>
+                        <p>Pedido recebido</p>
+                    </div>
+                    <div class="tracking-step is-complete">
+                        <span></span>
+                        <strong>Pagamento aceito</strong>
+                        <p>Pix aprovado</p>
+                    </div>
+                    <div class="tracking-step is-complete">
+                        <span></span>
+                        <strong>Enviado</strong>
+                        <p>Saiu para entrega</p>
+                    </div>
+                    <div class="tracking-step is-complete">
+                        <span></span>
+                        <strong>Entregue</strong>
+                        <p>Finalizado</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tracking-card">
+                <div class="tracking-header">
+                    <div>
+                        <span>Pedido #IN-1024</span>
+                        <h2>Camisetas da coleção</h2>
+                        <p>Camiseta Eye e Camiseta Night Logo</p>
+                    </div>
+                    <div class="tracking-summary">
+                        <strong>R$ 299,80</strong>
+                        <span class="status-pill is-payment">Pagamento aceito</span>
+                    </div>
+                </div>
+
+                <div class="tracking-steps" aria-label="Status do pedido #IN-1024">
+                    <div class="tracking-step is-complete">
+                        <span></span>
+                        <strong>Confirmado</strong>
+                        <p>Pedido recebido</p>
+                    </div>
+                    <div class="tracking-step is-current">
+                        <span></span>
+                        <strong>Pagamento aceito</strong>
+                        <p>Boleto compensado</p>
+                    </div>
+                    <div class="tracking-step">
+                        <span></span>
+                        <strong>Enviado</strong>
+                        <p>Em preparação</p>
+                    </div>
+                    <div class="tracking-step">
+                        <span></span>
+                        <strong>Entregue</strong>
+                        <p>Aguardando envio</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+    {% include "lojapp/includes/cart_drawer.html" %}
+    <script defer src="{% static 'files/assets/js/insomnia-cart.js' %}"></script>
+</body>
+</html>

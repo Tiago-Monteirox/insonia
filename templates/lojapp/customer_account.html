@@ -1,0 +1,86 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>INSÔNIA | Minha conta</title>
+    <link rel="stylesheet" href="{% static 'files/assets/css/insomnia-storefront.css' %}">
+</head>
+<body>
+    <main class="storefront account-page">
+        {% include "lojapp/includes/store_header.html" %}
+
+        <section class="account-hero shell">
+            <p class="eyebrow">Área do cliente</p>
+            <div class="account-hero-grid">
+                <div>
+                    <h1 class="account-title">Cadastro do cliente</h1>
+                    <p class="account-description">
+                        Crie sua conta para manter seus dados salvos e acessar a experiência personalizada da INSÔNIA.
+                    </p>
+                </div>
+                <div class="account-status">
+                    <span>Status da conta</span>
+                    <strong>Acesso demonstrativo</strong>
+                    <p>Pronto para conectar ao backend de autenticação e vendas.</p>
+                    <a class="account-status-link" href="/meus-pedidos/">Ver meus pedidos</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="account-layout shell">
+            <div class="account-panel account-form-panel">
+                <div class="panel-heading">
+                    <span>Novo cliente</span>
+                    <h2>Criar cadastro</h2>
+                </div>
+
+                <form class="customer-form" action="/minha-conta/">
+                    <label>
+                        Nome completo
+                        <input type="text" name="nome" placeholder="Seu nome" autocomplete="name">
+                    </label>
+                    <label>
+                        E-mail
+                        <input type="email" name="email" placeholder="voce@email.com" autocomplete="email">
+                    </label>
+                    <label>
+                        Telefone
+                        <input type="tel" name="telefone" placeholder="(00) 00000-0000" autocomplete="tel">
+                    </label>
+                    <label>
+                        Senha
+                        <input type="password" name="senha" placeholder="Crie uma senha" autocomplete="new-password">
+                    </label>
+
+                    <a class="button button-primary" href="/meus-pedidos/">Criar minha conta</a>
+                </form>
+            </div>
+
+            <div class="account-panel login-panel">
+                <div class="panel-heading">
+                    <span>Já tenho conta</span>
+                    <h2>Acessar conta</h2>
+                </div>
+
+                <form class="customer-form compact-form" action="/minha-conta/">
+                    <label>
+                        E-mail
+                        <input type="email" name="login-email" placeholder="voce@email.com" autocomplete="email">
+                    </label>
+                    <label>
+                        Senha
+                        <input type="password" name="login-senha" placeholder="Sua senha" autocomplete="current-password">
+                    </label>
+
+                    <a class="button" href="/meus-pedidos/">Entrar</a>
+                </form>
+            </div>
+        </section>
+    </main>
+    {% include "lojapp/includes/cart_drawer.html" %}
+    <script defer src="{% static 'files/assets/js/insomnia-cart.js' %}"></script>
+</body>
+</html>

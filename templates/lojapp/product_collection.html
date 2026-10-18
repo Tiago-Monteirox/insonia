@@ -1,0 +1,35 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>INSÔNIA | {{ collection_title|default:'Produtos' }}</title>
+    <link rel="stylesheet" href="{% static 'files/assets/css/insomnia-storefront.css' %}">
+</head>
+<body>
+    <main class="storefront collection-page">
+        {% include "lojapp/includes/store_header.html" %}
+
+        <section class="collection-hero shell">
+            <p class="eyebrow">{{ collection_kicker|default:'Coleção' }}</p>
+            <h1 class="collection-title">{{ collection_title|default:'Produtos' }}</h1>
+            <p class="collection-description">
+                {{ collection_description|default:'Seleção demonstrativa de peças INSÔNIA para uma vitrine premium de skatewear.' }}
+            </p>
+        </section>
+
+        <section class="collection-grid-section shell" aria-label="{{ collection_title|default:'Produtos' }}">
+            <div class="collection-toolbar">
+                <span>{{ collection_label|default:'Curadoria skatewear' }}</span>
+                <span>INSÔNIA Dark Editorial</span>
+            </div>
+
+            {% include "lojapp/includes/product_grid.html" %}
+        </section>
+    </main>
+    {% include "lojapp/includes/cart_drawer.html" %}
+    <script defer src="{% static 'files/assets/js/insomnia-cart.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% load static %}
+
+<header class="site-header">
+    <div class="shell header-top">
+        <span>Drop 01 disponível</span>
+        <span>Skatewear premium para noites longas</span>
+    </div>
+
+    <div class="shell header-inner">
+        <a class="brand" href="/" aria-label="INSÔNIA">
+            <img src="{% static 'files/assets/images/brand/insonia-logo.png' %}" alt="INSÔNIA">
+        </a>
+
+        <nav class="nav" aria-label="Navegação principal">
+            <a href="/novidades/" {% if active_nav == "novidades" %}class="is-active"{% endif %}>Novidades</a>
+            <a href="/calcados/" {% if active_nav == "calcados" %}class="is-active"{% endif %}>Calçados</a>
+            <a href="/roupas/" {% if active_nav == "roupas" %}class="is-active"{% endif %}>Roupas</a>
+            <a href="/acessorios/" {% if active_nav == "acessorios" %}class="is-active"{% endif %}>Acessórios</a>
+            <a href="/outlet/" {% if active_nav == "outlet" %}class="is-active"{% endif %}>Outlet</a>
+        </nav>
+
+        <div class="header-actions">
+            <a class="icon-button" href="#busca" aria-label="Buscar">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+                    <path d="m16.2 16.2 4 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+                </svg>
+            </a>
+            <a class="icon-button account-link{% if active_nav == "conta" %} is-active{% endif %}" href="/minha-conta/" aria-label="Minha conta">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.7"></circle>
+                    <path d="M4.8 20a7.4 7.4 0 0 1 14.4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                </svg>
+            </a>
+            <a class="cart-link" href="#carrinho" data-cart-open aria-controls="cart-drawer" aria-expanded="false">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 8h12l-1.2 8.3a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+                    <circle cx="9" cy="21" r="1" fill="currentColor"></circle>
+                    <circle cx="17" cy="21" r="1" fill="currentColor"></circle>
+                </svg>
+                <span>Carrinho</span>
+                <strong class="cart-count" data-cart-count>0</strong>
+            </a>
+        </div>
+    </div>
+</header>
