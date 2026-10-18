@@ -1,0 +1,35 @@
+<div class="cart-drawer-shell" data-cart-drawer aria-hidden="true">
+    <button class="cart-drawer-backdrop" type="button" data-cart-close aria-label="Fechar carrinho"></button>
+
+    <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
+        <div class="cart-drawer-header">
+            <div>
+                <span>Carrinho</span>
+                <h2 id="cart-drawer-title">Sua seleção</h2>
+            </div>
+
+            <button class="cart-close-button" type="button" data-cart-close aria-label="Fechar carrinho">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="cart-empty" data-cart-empty>
+            <strong>Seu carrinho está vazio.</strong>
+            <span>Adicione uma peça do drop para continuar a compra.</span>
+        </div>
+
+        <div class="cart-items" data-cart-items></div>
+
+        <div class="cart-drawer-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <strong data-cart-subtotal>R$ 0,00</strong>
+            </div>
+
+            <a class="button button-primary cart-checkout" href="#checkout">Finalizar compra</a>
+            <button class="cart-continue" type="button" data-cart-close>Continuar comprando</button>
+        </div>
+    </aside>
+</div>

@@ -1,13 +1,80 @@
-<!-- 
 {% load static %}
 
-{% block content %}
-<h2>Lista de Produtos</h2>
-<ul>
-    {% for produto in produtos %}
-    <li>{{ produto.name }} - {{ produto.preco_custo }}</li>
-    {% empty %}
-    <li>Nenhum produto encontrado.</li>
-    {% endfor %}
-</ul>
-{% endblock %} -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>INSÔNIA | Skatewear</title>
+    <link rel="stylesheet" href="{% static 'files/assets/css/insomnia-storefront.css' %}">
+</head>
+<body>
+    <main class="storefront">
+        {% include "lojapp/includes/store_header.html" %}
+
+        <section class="hero" id="novidades">
+            <div class="shell hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Drop noturno</p>
+                    <h1 class="hero-title">
+                        <span>Skatewear</span>
+                        <span>para a noite</span>
+                    </h1>
+                    <p class="hero-subtitle">Peças leves, cortes precisos, presença urbana.</p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="/novidades/">Ver coleção</a>
+                        <a class="button" href="/roupas/">Comprar agora</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="skate-panel">
+                        <div class="visual-label">
+                            <strong>INSÔNIA Drop 01</strong>
+                            <span>Jaquetas, cargos e camisetas para noites longas.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section shell" id="skatewear">
+            <div class="section-heading">
+                <h2>Drop em destaque</h2>
+                <span class="rule"></span>
+                <a href="/novidades/">Ver todos</a>
+            </div>
+
+            {% include "lojapp/includes/product_grid.html" %}
+
+            <div class="benefits" aria-label="Benefícios da loja">
+                <div class="benefit">
+                    <strong>Frete para todo o Brasil</strong>
+                    <span>Envio calculado no fechamento do pedido.</span>
+                </div>
+                <div class="benefit">
+                    <strong>Até 6x sem juros</strong>
+                    <span>Compra demonstrativa com fluxo seguro.</span>
+                </div>
+                <div class="benefit">
+                    <strong>Compra segura</strong>
+                    <span>Experiência preparada para e-commerce premium.</span>
+                </div>
+                <div class="benefit">
+                    <strong>Troca fácil</strong>
+                    <span>Política clara para lojas futuras.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="drop-banner shell" id="colecao">
+            <div class="banner-inner">
+                <h2>Noites longas, mesma visão.</h2>
+                <p>Uma base visual flexível para transformar a INSÔNIA em vitrine demonstrativa de marcas urbanas.</p>
+            </div>
+        </section>
+    </main>
+    {% include "lojapp/includes/cart_drawer.html" %}
+    <script defer src="{% static 'files/assets/js/insomnia-cart.js' %}"></script>
+</body>
+</html>

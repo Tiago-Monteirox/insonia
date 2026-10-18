@@ -1,0 +1,144 @@
+<div class="product-grid">
+    {% for produto in produtos %}
+        <article class="product-card">
+            <div class="product-media">
+                {% with imagem=produto.imagens.first %}
+                    {% if imagem %}
+                        <img src="{{ imagem.imagem.url }}" alt="{{ produto.name }}">
+                    {% else %}
+                        <span class="fallback-art" aria-hidden="true"></span>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3>{{ produto.name }}</h3>
+                    <p>{{ produto.preco_venda_promocional|default:produto.preco_venda|default:produto.preco_custo }}</p>
+                </div>
+                <button
+                    class="add-button"
+                    type="button"
+                    aria-label="Adicionar {{ produto.name }} ao carrinho"
+                    data-cart-add
+                    data-product-id="produto-{{ produto.id|default:forloop.counter }}"
+                    data-product-name="{{ produto.name }}"
+                    data-product-price="{{ produto.preco_venda_promocional|default:produto.preco_venda|default:produto.preco_custo }}"
+                    data-product-price-label="{{ produto.preco_venda_promocional|default:produto.preco_venda|default:produto.preco_custo }}"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 8h12l-1.2 8.3a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+                        <path d="M12 10v5M9.5 12.5h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                    </svg>
+                </button>
+            </div>
+        </article>
+    {% empty %}
+        <article class="product-card">
+            <div class="product-media">
+                <span class="fallback-art" aria-hidden="true"></span>
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3>Jaqueta Line</h3>
+                    <p>R$ 349,90</p>
+                </div>
+                <button
+                    class="add-button"
+                    type="button"
+                    aria-label="Adicionar Jaqueta Line ao carrinho"
+                    data-cart-add
+                    data-product-id="jaqueta-line"
+                    data-product-name="Jaqueta Line"
+                    data-product-price="349.90"
+                    data-product-price-label="R$ 349,90"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 8h12l-1.2 8.3a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+                        <path d="M12 10v5M9.5 12.5h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                    </svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <div class="product-media">
+                <span class="fallback-art" aria-hidden="true"></span>
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3>Camiseta Eye</h3>
+                    <p>R$ 149,90</p>
+                </div>
+                <button
+                    class="add-button"
+                    type="button"
+                    aria-label="Adicionar Camiseta Eye ao carrinho"
+                    data-cart-add
+                    data-product-id="camiseta-eye"
+                    data-product-name="Camiseta Eye"
+                    data-product-price="149.90"
+                    data-product-price-label="R$ 149,90"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 8h12l-1.2 8.3a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+                        <path d="M12 10v5M9.5 12.5h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                    </svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <div class="product-media">
+                <span class="fallback-art" aria-hidden="true"></span>
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3>Calça Slim Cargo</h3>
+                    <p>R$ 289,90</p>
+                </div>
+                <button
+                    class="add-button"
+                    type="button"
+                    aria-label="Adicionar Calça Slim Cargo ao carrinho"
+                    data-cart-add
+                    data-product-id="calca-slim-cargo"
+                    data-product-name="Calça Slim Cargo"
+                    data-product-price="289.90"
+                    data-product-price-label="R$ 289,90"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 8h12l-1.2 8.3a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+                        <path d="M12 10v5M9.5 12.5h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                    </svg>
+                </button>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <div class="product-media">
+                <span class="fallback-art" aria-hidden="true"></span>
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3>Overshirt Grafite</h3>
+                    <p>R$ 319,90</p>
+                </div>
+                <button
+                    class="add-button"
+                    type="button"
+                    aria-label="Adicionar Overshirt Grafite ao carrinho"
+                    data-cart-add
+                    data-product-id="overshirt-grafite"
+                    data-product-name="Overshirt Grafite"
+                    data-product-price="319.90"
+                    data-product-price-label="R$ 319,90"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 8h12l-1.2 8.3a2 2 0 0 1-2 1.7H9.2a2 2 0 0 1-2-1.7L6 4H3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+                        <path d="M12 10v5M9.5 12.5h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+                    </svg>
+                </button>
+            </div>
+        </article>
+    {% endfor %}
+</div>
